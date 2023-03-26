@@ -8,4 +8,7 @@ import com.tommygr.gamequiz.data.User
 
 @Database(entities = [User::class, QuizElement::class, Statistic::class], version = 1, exportSchema = true)
 abstract class GameQuizDb: RoomDatabase() {
+    abstract fun quizElementDao(): QuizElementDao
+    abstract fun statisticDao(): StatisticDao
+    abstract fun userDao(): UserDataDao
 }
