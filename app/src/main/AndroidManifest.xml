@@ -12,7 +12,7 @@
         android:theme="@style/Theme.GameQuiz"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
+            android:name=".mainscreen.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

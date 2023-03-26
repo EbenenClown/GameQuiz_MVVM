@@ -1,10 +1,10 @@
-package com.tommygr.gamequiz
+package com.tommygr.gamequiz.mainscreen
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.databinding.DataBindingUtil
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
+import com.tommygr.gamequiz.R
 import com.tommygr.gamequiz.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
