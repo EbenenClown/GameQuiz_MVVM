@@ -7,11 +7,11 @@ import kotlinx.coroutines.flow.Flow
 interface UserDataSource {
     fun observeUser(id: String): Flow<Result<User>>
 
-    fun getUser(id: String): Result<User>
+    suspend fun getUser(id: String): Result<User>
 
-    fun refreshUser(id: String)
+    suspend fun refreshUser()
 
-    fun saveUser(id: String)
+    suspend fun saveUser(user: User)
 
-    fun updateUser(id: String)
+    suspend fun updateUser(user: User)
 }

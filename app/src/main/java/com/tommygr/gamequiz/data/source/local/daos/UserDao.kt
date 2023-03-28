@@ -1,4 +1,4 @@
-package com.tommygr.gamequiz.data.source.local
+package com.tommygr.gamequiz.data.source.local.daos
 
 
 import androidx.room.*
@@ -6,7 +6,7 @@ import com.tommygr.gamequiz.data.User
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-interface UserDataDao {
+interface UserDao {
     @Query("SELECT * FROM User WHERE userId=:userId")
     fun observeUser(userID: String): Flow<User>
 

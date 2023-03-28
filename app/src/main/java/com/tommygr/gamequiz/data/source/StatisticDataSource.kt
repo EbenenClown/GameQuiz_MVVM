@@ -12,11 +12,11 @@ interface StatisticDataSource {
 
     suspend fun refreshStatistic()
 
-    suspend fun saveStatistic(userId: String)
+    suspend fun saveStatistic(statistic: Statistic)
 
-    suspend fun updateStatistic(userId: String)
+    suspend fun updateStatistic(statistic: Statistic)
 
-    suspend fun deleteStatistic(userId: String)
+    suspend fun deleteStatisticWithId(userId: String)
 
     suspend fun clear()
 }

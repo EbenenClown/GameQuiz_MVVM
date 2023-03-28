@@ -1,4 +1,4 @@
-package com.tommygr.gamequiz.data.source.local
+package com.tommygr.gamequiz.data.source.local.daos
 
 
 import androidx.room.*
@@ -19,8 +19,8 @@ interface StatisticDao {
     @Update
     fun updateStatistic(statistic: Statistic)
 
-    @Delete
-    fun deleteStatistic(statistic: Statistic)
+    @Query("DELETE FROM statistic WHERE userId=:userId")
+    fun deleteStatistic(userId: String)
 
     @Query("DELETE FROM statistic")
     fun clear()

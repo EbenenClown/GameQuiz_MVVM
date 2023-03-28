@@ -1,4 +1,4 @@
-package com.tommygr.gamequiz.data.source.local
+package com.tommygr.gamequiz.data.source.local.daos
 
 import androidx.room.*
 import com.tommygr.gamequiz.data.QuizElement
@@ -19,7 +19,13 @@ interface QuizElementDao {
     fun getQuizElement(id: String): QuizElement
 
     @Query("SELECT * FROM quizElement WHERE type=0")
+    fun observeScrambledQuizElements(): Flow<List<QuizElement>>
+
+    @Query("SELECT * FROM quizElement WHERE type=0")
     fun getScrambledQuizElements(): List<QuizElement>
+
+    @Query("SELECT * FROM quizElement WHERE type=1")
+    fun observePictureQuizElements(): Flow<List<QuizElement>>
 
     @Query("SELECT * FROM quizElement WHERE type=1")
     fun getPictureQuizElements(): List<QuizElement>

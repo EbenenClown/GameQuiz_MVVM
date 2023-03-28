@@ -5,9 +5,17 @@ import kotlinx.coroutines.flow.Flow
 import com.tommygr.gamequiz.data.Result
 
 interface QuizElementDataSource {
-    fun observeElements(): Flow<Result<List<QuizElement>>>
+    fun observeAllElements(): Flow<Result<List<QuizElement>>>
 
-    suspend fun getElements(): Result<List<QuizElement>>
+    suspend fun getAllElements(): Result<List<QuizElement>>
+
+    fun observeScrambledElements(): Flow<Result<List<QuizElement>>>
+
+    suspend fun getScrambledElements(): Result<List<QuizElement>>
+
+    fun observePictureElements(): Flow<Result<List<QuizElement>>>
+
+    suspend fun getPictureElements(): Result<List<QuizElement>>
 
     suspend fun refreshElements()
 
@@ -18,6 +26,8 @@ interface QuizElementDataSource {
     suspend fun refreshElement(id: String)
 
     suspend fun saveElement(quizElement: QuizElement)
+
+    suspend fun updateElement(quizElement: QuizElement)
 
     suspend fun deleteElement(quizElement: QuizElement)
 
