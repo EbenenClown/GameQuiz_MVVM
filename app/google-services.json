@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "417021384308",
+    "project_id": "gamingquiz-6948a",
+    "storage_bucket": "gamingquiz-6948a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:417021384308:android:643f8f9467d12986d52321",
+        "android_client_info": {
+          "package_name": "com.tommygr.gamequiz"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "417021384308-p6m1av9t23va9boklul3rlpvubo06g66.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD-n5y0lKaFJgD_wKk4i2nVUSJmipodAOw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "417021384308-p6m1av9t23va9boklul3rlpvubo06g66.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
