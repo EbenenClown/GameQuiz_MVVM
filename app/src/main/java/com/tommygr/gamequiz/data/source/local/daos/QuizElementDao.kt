@@ -13,7 +13,7 @@ interface QuizElementDao {
     fun getAllQuizElements(): List<QuizElement>
 
     @Query("SELECT * FROM quizElement WHERE id=:id")
-    fun observeQuizElement(iD: String): Flow<QuizElement>
+    fun observeQuizElement(id: String): Flow<QuizElement>
 
     @Query("SELECT * FROM quizElement WHERE id=:id")
     fun getQuizElement(id: String): QuizElement
