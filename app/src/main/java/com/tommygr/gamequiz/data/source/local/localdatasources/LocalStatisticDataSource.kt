@@ -1,27 +1,17 @@
 package com.tommygr.gamequiz.data.source.local.localdatasources
 
-import com.tommygr.gamequiz.data.Result
 import com.tommygr.gamequiz.data.Statistic
 import com.tommygr.gamequiz.data.source.StatisticDataSource
 import com.tommygr.gamequiz.data.source.local.daos.StatisticDao
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
-import java.lang.Exception
 
 class LocalStatisticDataSource(private val statisticDao: StatisticDao, private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO): StatisticDataSource {
-    override fun observeStatistic(userId: String): Flow<Result<Statistic>> {
-        return statisticDao.observeStatistic(userId).map { Result.Success(it) }
-    }
+    override fun observeStatistic(userId: String)= statisticDao.observeStatistic(userId)
 
     override suspend fun getStatistic(userId: String) = withContext(ioDispatcher) {
-        return@withContext try {
-            Result.Success(statisticDao.getStatistic(userId))
-        } catch (e: Exception) {
-            Result.Error(e)
-        }
+        return@withContext statisticDao.getStatistic(userId)
     }
 
     override suspend fun refreshStatistic() {

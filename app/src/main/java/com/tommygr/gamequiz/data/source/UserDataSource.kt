@@ -1,13 +1,12 @@
 package com.tommygr.gamequiz.data.source
 
 import com.tommygr.gamequiz.data.User
-import com.tommygr.gamequiz.data.Result
 import kotlinx.coroutines.flow.Flow
 
 interface UserDataSource {
-    fun observeUser(id: String): Flow<Result<User>>
+    fun observeUser(id: String): Flow<User>
 
-    suspend fun getUser(id: String): Result<User>
+    suspend fun getUser(id: String): User
 
     suspend fun refreshUser()
 

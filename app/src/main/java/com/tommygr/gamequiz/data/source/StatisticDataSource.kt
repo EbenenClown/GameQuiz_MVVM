@@ -2,13 +2,12 @@ package com.tommygr.gamequiz.data.source
 
 import com.tommygr.gamequiz.data.Statistic
 
-import com.tommygr.gamequiz.data.Result
 import kotlinx.coroutines.flow.Flow
 
 interface StatisticDataSource {
-    fun observeStatistic(userId: String): Flow<Result<Statistic>>
+    fun observeStatistic(userId: String): Flow<Statistic>
 
-    suspend fun getStatistic(userId: String): Result<Statistic>
+    suspend fun getStatistic(userId: String): Statistic
 
     suspend fun refreshStatistic()
 
