@@ -1,6 +1,6 @@
 package com.tommygr.gamequiz.data.source.remote.remotedatasources
 
-import com.tommygr.gamequiz.data.Statistic
+import com.tommygr.gamequiz.data.source.datamodels.StatisticDataModel
 import com.tommygr.gamequiz.data.source.StatisticDataSource
 import com.tommygr.gamequiz.data.source.remote.FirebaseAPI
 import kotlinx.coroutines.CoroutineDispatcher
@@ -10,22 +10,18 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.withContext
 
 class RemoteStatisticDataSource(private val firebaseAPI: FirebaseAPI, private val dispatcher: CoroutineDispatcher = Dispatchers.IO): StatisticDataSource {
-    override fun observeStatistic(userId: String): Flow<Statistic> = flow { emit(firebaseAPI.getStatisticById(userId)) }
+    override fun observeStatistic(userId: String): Flow<StatisticDataModel> = flow { emit(firebaseAPI.getStatisticById(userId)) }
 
-    override suspend fun getStatistic(userId: String): Statistic = withContext(dispatcher) {
+    override suspend fun getStatistic(userId: String): StatisticDataModel = withContext(dispatcher) {
         return@withContext firebaseAPI.getStatisticById(userId)
     }
 
-    override suspend fun refreshStatistic() {
-        TODO("Not yet implemented")
+    override suspend fun saveStatistic(statisticDataModel: StatisticDataModel) = withContext(dispatcher) {
+        return@withContext firebaseAPI.saveStatistic(statisticDataModel)
     }
 
-    override suspend fun saveStatistic(statistic: Statistic) = withContext(dispatcher) {
-        return@withContext firebaseAPI.saveStatistic(statistic)
-    }
-
-    override suspend fun updateStatistic(statistic: Statistic) = withContext(dispatcher) {
-        return@withContext firebaseAPI.updateStatistic(statistic.userId, statistic)
+    override suspend fun updateStatistic(statisticDataModel: StatisticDataModel) = withContext(dispatcher) {
+        return@withContext firebaseAPI.updateStatistic(statisticDataModel.userId, statisticDataModel)
     }
 
     override suspend fun deleteStatisticWithId(userId: String) = withContext(dispatcher) {

@@ -1,9 +1,9 @@
-package com.tommygr.gamequiz.data.source
+package com.tommygr.gamequiz.domain
 
 import com.tommygr.gamequiz.data.source.datamodels.UserDataModel
 import kotlinx.coroutines.flow.Flow
 
-interface UserDataSource {
+interface UserRepository {
     fun observeUser(id: String): Flow<UserDataModel>
 
     suspend fun getUser(id: String): UserDataModel
@@ -13,4 +13,5 @@ interface UserDataSource {
     suspend fun saveNewUser(userDataModel: UserDataModel)
 
     suspend fun updateUser(userDataModel: UserDataModel)
+
 }

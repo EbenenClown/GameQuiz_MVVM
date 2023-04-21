@@ -1,46 +1,34 @@
 package com.tommygr.gamequiz.data.source.local.daos
 
 import androidx.room.*
-import com.tommygr.gamequiz.data.QuizElement
+import com.tommygr.gamequiz.data.source.datamodels.QuizElementDataModel
 import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface QuizElementDao {
     @Query("SELECT * FROM quizElement")
-    fun observeAllQuizElements(): Flow<List<QuizElement>>
+    fun observeAllQuizElements(): Flow<List<QuizElementDataModel>>
 
     @Query("SELECT * FROM quizElement")
-    fun getAllQuizElements(): List<QuizElement>
+    fun getAllQuizElements(): List<QuizElementDataModel>
 
     @Query("SELECT * FROM quizElement WHERE id=:id")
-    fun observeQuizElement(id: String): Flow<QuizElement>
+    fun observeQuizElement(id: String): Flow<QuizElementDataModel>
 
     @Query("SELECT * FROM quizElement WHERE id=:id")
-    fun getQuizElement(id: String): QuizElement
-
-    @Query("SELECT * FROM quizElement WHERE type=0")
-    fun observeScrambledQuizElements(): Flow<List<QuizElement>>
-
-    @Query("SELECT * FROM quizElement WHERE type=0")
-    fun getScrambledQuizElements(): List<QuizElement>
-
-    @Query("SELECT * FROM quizElement WHERE type=1")
-    fun observePictureQuizElements(): Flow<List<QuizElement>>
-
-    @Query("SELECT * FROM quizElement WHERE type=1")
-    fun getPictureQuizElements(): List<QuizElement>
-
-    @Query("SELECT * FROM quizElement WHERE isSolved=1")
-    fun getNotCompletedQuizElements()
+    fun getQuizElement(id: String): QuizElementDataModel
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertQuizElement(quizElement: QuizElement)
+    fun insertQuizElement(quizElementDataModel: QuizElementDataModel)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertAll(quizElementDataModels: List<QuizElementDataModel>)
 
     @Update
-    fun updateQuizElement(quizElement: QuizElement)
+    fun updateQuizElement(quizElementDataModel: QuizElementDataModel)
 
     @Delete
-    fun deleteQuizElement(quizElement: QuizElement)
+    fun deleteQuizElement(quizElementDataModel: QuizElementDataModel)
 
     @Query("DELETE FROM quizElement")
     fun clear()

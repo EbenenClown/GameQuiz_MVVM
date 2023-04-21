@@ -1,18 +1,20 @@
-package com.tommygr.gamequiz.data.source
+package com.tommygr.gamequiz.domain
 
 import com.tommygr.gamequiz.data.source.datamodels.QuizElementDataModel
 import kotlinx.coroutines.flow.Flow
 
-interface QuizElementDataSource {
+interface QuizElementRepository {
     fun observeAllElements(): Flow<List<QuizElementDataModel>>
 
     suspend fun getAllElements(): List<QuizElementDataModel>
 
+    suspend fun refreshElements()
+
     fun observeElement(id: String): Flow<QuizElementDataModel>
 
-    suspend fun getElement(id:String): QuizElementDataModel
+    suspend fun getElementById(id: String): QuizElementDataModel
 
-    suspend fun insertAll(quizElementDataModels: List<QuizElementDataModel>)
+    suspend fun refreshElement(id: String)
 
     suspend fun saveElement(quizElementDataModel: QuizElementDataModel)
 

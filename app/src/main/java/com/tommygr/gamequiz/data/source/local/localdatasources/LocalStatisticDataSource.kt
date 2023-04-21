@@ -1,6 +1,6 @@
 package com.tommygr.gamequiz.data.source.local.localdatasources
 
-import com.tommygr.gamequiz.data.Statistic
+import com.tommygr.gamequiz.data.source.datamodels.StatisticDataModel
 import com.tommygr.gamequiz.data.source.StatisticDataSource
 import com.tommygr.gamequiz.data.source.local.daos.StatisticDao
 import kotlinx.coroutines.CoroutineDispatcher
@@ -14,16 +14,12 @@ class LocalStatisticDataSource(private val statisticDao: StatisticDao, private v
         return@withContext statisticDao.getStatistic(userId)
     }
 
-    override suspend fun refreshStatistic() {
-        TODO("Not yet implemented")
+    override suspend fun saveStatistic(statisticDataModel: StatisticDataModel) = withContext(ioDispatcher) {
+        statisticDao.insertStatistic(statisticDataModel)
     }
 
-    override suspend fun saveStatistic(statistic: Statistic) = withContext(ioDispatcher) {
-        statisticDao.insertStatistic(statistic)
-    }
-
-    override suspend fun updateStatistic(statistic: Statistic) = withContext(ioDispatcher) {
-        statisticDao.updateStatistic(statistic)
+    override suspend fun updateStatistic(statisticDataModel: StatisticDataModel) = withContext(ioDispatcher) {
+        statisticDao.updateStatistic(statisticDataModel)
     }
 
     override suspend fun deleteStatisticWithId(userId: String) = withContext(ioDispatcher) {

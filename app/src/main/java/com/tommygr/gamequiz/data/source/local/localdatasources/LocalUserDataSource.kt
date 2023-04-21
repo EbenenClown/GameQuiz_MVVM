@@ -1,6 +1,6 @@
 package com.tommygr.gamequiz.data.source.local.localdatasources
 
-import com.tommygr.gamequiz.data.User
+import com.tommygr.gamequiz.data.source.datamodels.UserDataModel
 import com.tommygr.gamequiz.data.source.UserDataSource
 import com.tommygr.gamequiz.data.source.local.daos.UserDao
 import kotlinx.coroutines.CoroutineDispatcher
@@ -18,11 +18,11 @@ class LocalUserDataSource internal constructor(private val userDao: UserDao, pri
         TODO("Not yet implemented")
     }
 
-    override suspend fun saveUser(user: User) = withContext(ioDispatcher) {
-        userDao.insertUser(user)
+    override suspend fun saveNewUser(userDataModel: UserDataModel) = withContext(ioDispatcher) {
+        userDao.insertUser(userDataModel)
     }
 
-    override suspend fun updateUser(user: User) = withContext(ioDispatcher) {
-        userDao.updateUser(user)
+    override suspend fun updateUser(userDataModel: UserDataModel) = withContext(ioDispatcher) {
+        userDao.updateUser(userDataModel)
     }
 }

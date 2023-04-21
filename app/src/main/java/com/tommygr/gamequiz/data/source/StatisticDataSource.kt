@@ -1,19 +1,17 @@
 package com.tommygr.gamequiz.data.source
 
-import com.tommygr.gamequiz.data.Statistic
+import com.tommygr.gamequiz.data.source.datamodels.StatisticDataModel
 
 import kotlinx.coroutines.flow.Flow
 
 interface StatisticDataSource {
-    fun observeStatistic(userId: String): Flow<Statistic>
+    fun observeStatistic(userId: String): Flow<StatisticDataModel>
 
-    suspend fun getStatistic(userId: String): Statistic
+    suspend fun getStatistic(userId: String): StatisticDataModel
 
-    suspend fun refreshStatistic()
+    suspend fun saveStatistic(statisticDataModel: StatisticDataModel)
 
-    suspend fun saveStatistic(statistic: Statistic)
-
-    suspend fun updateStatistic(statistic: Statistic)
+    suspend fun updateStatistic(statisticDataModel: StatisticDataModel)
 
     suspend fun deleteStatisticWithId(userId: String)
 

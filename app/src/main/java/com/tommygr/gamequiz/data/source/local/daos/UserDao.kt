@@ -2,25 +2,25 @@ package com.tommygr.gamequiz.data.source.local.daos
 
 
 import androidx.room.*
-import com.tommygr.gamequiz.data.User
+import com.tommygr.gamequiz.data.source.datamodels.UserDataModel
 import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface UserDao {
-    @Query("SELECT * FROM User WHERE userId=:userId")
-    fun observeUser(userID: String): Flow<User>
+    @Query("SELECT * FROM user WHERE userId=:userId")
+    fun observeUser(userId: String): Flow<UserDataModel>
 
-    @Query("SELECT * FROM User WHERE userId=:userId")
-    fun getUser(userId: String): User
+    @Query("SELECT * FROM user WHERE userId=:userId")
+    fun getUser(userId: String): UserDataModel
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertUser(user: User)
+    fun insertUser(userDataModel: UserDataModel)
 
     @Update
-    fun updateUser(user: User)
+    fun updateUser(userDataModel: UserDataModel)
 
     @Delete
-    fun deleteUser(user: User)
+    fun deleteUser(userDataModel: UserDataModel)
 
     @Query("DELETE FROM user")
     fun clear()
