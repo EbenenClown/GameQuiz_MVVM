@@ -15,19 +15,6 @@ class LocalQuizElementDataSource(private val quizElementDao: QuizElementDao, pri
 
     }
 
-    override fun observeScrambledElements() = quizElementDao.observeScrambledQuizElements()
-
-    override suspend fun getScrambledElements(): List<QuizElement> = withContext(ioDispatcher) {
-        return@withContext quizElementDao.getScrambledQuizElements()
-
-    }
-
-    override fun observePictureElements() = quizElementDao.observePictureQuizElements()
-
-    override suspend fun getPictureElements(): List<QuizElement> = withContext(ioDispatcher) {
-        return@withContext quizElementDao.getPictureQuizElements()
-    }
-
     override suspend fun refreshElements() {
         TODO("Not yet implemented")
     }

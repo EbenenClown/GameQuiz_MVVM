@@ -26,6 +26,9 @@ interface FirebaseAPI {
     @PUT("quizelements/{id}")
     fun updateElement(@Path("id")id: String, @Body element: QuizElement)
 
+    @DELETE("quizelements/{id}")
+    fun deleteElement(@Path("id")id: String)
+
     @GET("/statistics/{id}")
     fun getStatisticById(@Path("id")userId: String): Statistic
 
@@ -36,10 +39,10 @@ interface FirebaseAPI {
     fun updateStatistic(@Path("id")id: String, @Body statistic: Statistic)
 
     @DELETE("statistics/{id}")
-    fun deleteStatistic(@Path("id")id: String, @Body statistic: Statistic)
+    fun deleteStatistic(@Path("id")id: String)
 
     @GET("/users/{id}")
-    fun getUserById(@Path("id")id: User): User
+    fun getUserById(@Path("id")id: String): User
 
     @POST("/users/")
     fun saveNewUser(user: User)
@@ -48,7 +51,7 @@ interface FirebaseAPI {
     fun updateUser(@Path("id")id: String, @Body user: User)
 
     @DELETE("users/{id}")
-    fun deleteUser(@Path("id")id: String, @Body user: User)
+    fun deleteUser(@Path("id")id: String)
 
 
 }
