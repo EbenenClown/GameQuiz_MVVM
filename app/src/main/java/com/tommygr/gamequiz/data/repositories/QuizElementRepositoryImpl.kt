@@ -31,6 +31,10 @@ class QuizElementRepositoryImpl(private val localQuizElementDataSource: LocalQui
         TODO("Not yet implemented")
     }
 
+    override suspend fun insertAll(quizElementDomainModelList: List<QuizElementDomainModel>) {
+        TODO("Not yet implemented")
+    }
+
     override suspend fun updateElement(quizElementDomainModel: QuizElementDomainModel) {
         TODO("Not yet implemented")
     }
