@@ -4,5 +4,6 @@ data class QuizElementDomainModel( val id: String, val type: Int, val question: 
                        val options: String,
                        val difficulty: Int,
                        val hint: String,
-                       val isSolved: Boolean)
+                       val isSolved: Boolean,
+                       val wasShown: Boolean)
 //TODO: options to array

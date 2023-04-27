@@ -8,5 +8,6 @@ data class QuizElementDataModel(@PrimaryKey val id: String, val type: Int, val q
                                 val options: String,
                                 val difficulty: Int,
                                 val hint: String,
-                                val isSolved: Boolean)
+                                val isSolved: Boolean,
+                                val wasShown: Boolean)
 //TODO: options to array

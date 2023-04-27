@@ -2,7 +2,7 @@ package com.tommygr.gamequiz.data.source.local.localdatasources
 
 import com.tommygr.gamequiz.data.source.datamodels.QuizElementDataModel
 import com.tommygr.gamequiz.data.source.QuizElementDataSource
-import com.tommygr.gamequiz.data.source.local.daos.QuizElementDao
+import com.tommygr.gamequiz.data.source.local.database.QuizElementDao
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -12,6 +12,15 @@ class LocalQuizElementDataSource(private val quizElementDao: QuizElementDao, pri
 
     override suspend fun getAllElements(): List<QuizElementDataModel> = withContext(dispatcher) {
         return@withContext quizElementDao.getAllQuizElements()
+
+    }
+
+    override suspend fun getAllNotSolvedElements(): List<QuizElementDataModel> = withContext(dispatcher) {
+        return@withContext quizElementDao.getAllNotSolvedElements()
+    }
+
+    override suspend fun getAllNotShownElements(): List<QuizElementDataModel> = withContext(dispatcher) {
+        return@withContext quizElementDao.getAllNotShownElements()
 
     }
 

@@ -1,4 +1,4 @@
-package com.tommygr.gamequiz.data.source.local.daos
+package com.tommygr.gamequiz.data.source.local.database
 
 
 import androidx.room.*

@@ -1,4 +1,4 @@
-package com.tommygr.gamequiz.data.source.local.converters
+package com.tommygr.gamequiz.data.source.local.database.converters
 
 import androidx.room.TypeConverter
 import java.util.Date

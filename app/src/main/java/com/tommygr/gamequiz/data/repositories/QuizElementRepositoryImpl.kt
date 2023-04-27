@@ -14,6 +14,9 @@ class QuizElementRepositoryImpl(private val localQuizElementDataSource: LocalQui
     override fun observeAllElements() = localQuizElementDataSource.observeAllElements().map { it.toDomainModel() }
 
     override suspend fun getAllElements() = localQuizElementDataSource.getAllElements().toDomainModel()
+    override suspend fun getAllNotShownElements(): List<QuizElementDomainModel> = localQuizElementDataSource.getAllNotShownElements().toDomainModel()
+
+    override suspend fun getAllNotSolvedElements(): List<QuizElementDomainModel> = localQuizElementDataSource.getAllNotSolvedElements().toDomainModel()
 
     override suspend fun refreshElements() {
         val elements = remoteQuizElementDataSource.getAllElements()

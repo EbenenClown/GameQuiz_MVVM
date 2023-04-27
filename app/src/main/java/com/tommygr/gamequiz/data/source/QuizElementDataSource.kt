@@ -8,6 +8,10 @@ interface QuizElementDataSource {
 
     suspend fun getAllElements(): List<QuizElementDataModel>
 
+    suspend fun getAllNotSolvedElements(): List<QuizElementDataModel>
+
+    suspend fun getAllNotShownElements(): List<QuizElementDataModel>
+
     fun observeElement(id: String): Flow<QuizElementDataModel>
 
     suspend fun getElement(id:String): QuizElementDataModel

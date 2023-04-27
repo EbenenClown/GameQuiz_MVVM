@@ -16,6 +16,14 @@ class RemoteQuizElementDataSource(private val firebaseAPI: FirebaseAPI, private 
         return@withContext firebaseAPI.getAll()
     }
 
+    override suspend fun getAllNotSolvedElements(): List<QuizElementDataModel> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getAllNotShownElements(): List<QuizElementDataModel> {
+        TODO("Not yet implemented")
+    }
+
     override fun observeElement(id: String): Flow<QuizElementDataModel> = flow { emit(firebaseAPI.getElementById(id)) }
 
     override suspend fun getElement(id: String): QuizElementDataModel = withContext(dispatcher) {

@@ -2,7 +2,7 @@ package com.tommygr.gamequiz.data.source.local.localdatasources
 
 import com.tommygr.gamequiz.data.source.datamodels.UserDataModel
 import com.tommygr.gamequiz.data.source.UserDataSource
-import com.tommygr.gamequiz.data.source.local.daos.UserDao
+import com.tommygr.gamequiz.data.source.local.database.UserDao
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
