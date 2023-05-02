@@ -1,26 +1,34 @@
 package com.tommygr.gamequiz.data.source.remote.remotedatasources
 
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import com.tommygr.gamequiz.data.source.datamodels.UserDataModel
+import com.tommygr.gamequiz.data.source.datamodels.mapper.toDataModel
+import com.tommygr.gamequiz.data.source.datamodels.mapper.toDomainModel
 import com.tommygr.gamequiz.data.source.remote.FirebaseAPI
+import com.tommygr.gamequiz.util.Resource
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.withContext
 
-class RemoteUserDataSource(private val firebaseAPI: FirebaseAPI, private val dispatcher: CoroutineDispatcher = Dispatchers.IO) {
-     fun observeUser(id: String): Flow<UserDataModel> = flow { emit(firebaseAPI.getUserById(id)) }
+class RemoteUserDataSource(private val firebaseAuth: FirebaseAuth, private val dispatcher: CoroutineDispatcher = Dispatchers.IO) {
 
-     suspend fun getUser(id: String): UserDataModel = withContext(dispatcher) {
-        return@withContext firebaseAPI.getUserById(id)
+     suspend fun getUser() = withContext(dispatcher) {
+         return@withContext Firebase.auth.currentUser
     }
 
-     suspend fun saveNewUser(userDataModel: UserDataModel) = withContext(dispatcher) {
-        return@withContext firebaseAPI.saveNewUser(userDataModel)
+    suspend fun isUserSignedIn(): Boolean = withContext(dispatcher) {
+        return@withContext Firebase.auth.currentUser != null
     }
 
-     suspend fun updateUser(userDataModel: UserDataModel) = withContext(dispatcher) {
-        return@withContext firebaseAPI.updateUser(userDataModel.userId, userDataModel)
+     suspend fun registerUserWithEmailAndPassword(email: String, password: String) = withContext(dispatcher) {
+        return@withContext firebaseAuth.createUserWithEmailAndPassword(email, password)
     }
 
+    suspend fun loginUserWithEmailAndPassword(email: String, password: String) = withContext(dispatcher) {
+        return@withContext firebaseAuth.signInWithEmailAndPassword(email, password)
+    }
 }

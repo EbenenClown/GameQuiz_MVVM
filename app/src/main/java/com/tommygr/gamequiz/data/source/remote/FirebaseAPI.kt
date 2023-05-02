@@ -26,19 +26,4 @@ interface FirebaseAPI {
 
     @DELETE("statistics/{id}")
     fun deleteStatistic(@Path("id")id: String)
-
-    @GET("/users/{id}")
-    fun getUserById(@Path("id")id: String): UserDataModel
-
-    @POST("/users/")
-    fun saveNewUser(userDataModel: UserDataModel)
-
-    @PUT("users/{id}")
-    fun updateUser(@Path("id")id: String, @Body userDataModel: UserDataModel)
-
-    @DELETE("users/{id}")
-    fun deleteUser(@Path("id")id: String)
-
-
-
 }

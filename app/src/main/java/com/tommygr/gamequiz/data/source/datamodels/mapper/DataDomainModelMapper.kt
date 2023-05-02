@@ -1,5 +1,6 @@
 package com.tommygr.gamequiz.data.source.datamodels.mapper
 
+import com.google.firebase.auth.FirebaseUser
 import com.tommygr.gamequiz.data.source.datamodels.QuizElementDataModel
 import com.tommygr.gamequiz.data.source.datamodels.StatisticDataModel
 import com.tommygr.gamequiz.data.source.datamodels.UserDataModel
@@ -17,6 +18,10 @@ fun StatisticDataModel.toDomainModel(): StatisticDomainModel = StatisticDomainMo
 
 fun StatisticDomainModel.toDataModel(): StatisticDataModel = StatisticDataModel(userId, gamesWon, gamesLost, perfectGames)
 
-fun UserDataModel.toDomainModel(): UserDomainModel = UserDomainModel(userId, displayName, email, dateJoined)
+fun UserDataModel.toDomainModel(): UserDomainModel = UserDomainModel(userId, email)
 
-fun UserDomainModel.toDataModel(): UserDataModel = UserDataModel(userId, displayName, email, dateJoined)
+fun UserDomainModel.toDataModel(): UserDataModel = UserDataModel(userId, email)
+
+fun FirebaseUser.toDomainModel(): UserDomainModel = UserDomainModel(uid, email ?: "")
+
+fun FirebaseUser.toDataModel(): UserDataModel = UserDataModel(uid, email ?: "")

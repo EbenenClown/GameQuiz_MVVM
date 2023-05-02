@@ -8,7 +8,7 @@ import java.util.UUID
 class CreateLocalUserUseCase(private val userRepository: UserRepository) {
     suspend operator fun invoke() {
         val generatedId = UUID.randomUUID().toString()
-        val emptyUser = UserDomainModel(userId = generatedId, displayName = "", email = "", dateJoined = Date())
+        val emptyUser = UserDomainModel(userId = generatedId, email = "")
         userRepository.saveNewUser(emptyUser)
     }
 }

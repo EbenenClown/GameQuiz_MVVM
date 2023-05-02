@@ -3,7 +3,6 @@ package com.tommygr.gamequiz.data.source.local.daos
 
 import androidx.room.*
 import com.tommygr.gamequiz.data.source.datamodels.UserDataModel
-import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface UserDao {
@@ -12,7 +11,7 @@ interface UserDao {
     fun getUser(): UserDataModel
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun addNewUser(userDataModel: UserDataModel)
+    fun addOrReplaceUser(userDataModel: UserDataModel)
 
     @Update
     fun updateUser(userDataModel: UserDataModel)

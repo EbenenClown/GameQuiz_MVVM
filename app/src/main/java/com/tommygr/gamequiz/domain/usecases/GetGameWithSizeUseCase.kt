@@ -26,7 +26,6 @@ class GetGameWithSizeUseCase(private val quizElementRepository: QuizElementRepos
 
         val statisticsUseCase = GetStatisticUseCase(statisticRepository)
 
-
         return GameDomainModel(sortedList, statisticsUseCase())
     }
 }

@@ -3,7 +3,7 @@ package com.tommygr.gamequiz.di
 import android.content.Context
 import androidx.room.Room
 import com.tommygr.gamequiz.data.source.local.GameQuizDb
-import com.tommygr.gamequiz.utilities.Constants
+import com.tommygr.gamequiz.util.Constants
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
