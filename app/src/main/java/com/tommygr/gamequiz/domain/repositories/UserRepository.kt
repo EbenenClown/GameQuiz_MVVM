@@ -5,9 +5,8 @@ import com.tommygr.gamequiz.domain.domainmodels.UserDomainModel
 import kotlinx.coroutines.flow.Flow
 
 interface UserRepository {
-    fun observeUser(id: String): Flow<UserDomainModel>
 
-    suspend fun getUser(id: String): UserDomainModel
+    suspend fun getUser(forceUpdate: Boolean = false): UserDomainModel
 
     suspend fun refreshUser(id: String)
 

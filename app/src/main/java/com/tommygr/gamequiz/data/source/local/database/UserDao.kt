@@ -7,14 +7,12 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface UserDao {
-    @Query("SELECT * FROM user WHERE userId=:userId")
-    fun observeUser(userId: String): Flow<UserDataModel>
 
-    @Query("SELECT * FROM user WHERE userId=:userId")
-    fun getUser(userId: String): UserDataModel
+    @Query("SELECT * FROM user")
+    fun getUser(): UserDataModel
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertUser(userDataModel: UserDataModel)
+    fun addNewUser(userDataModel: UserDataModel)
 
     @Update
     fun updateUser(userDataModel: UserDataModel)

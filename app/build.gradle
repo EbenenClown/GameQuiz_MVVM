@@ -66,6 +66,8 @@ allprojects {
 }
 
 dependencies {
+    implementation 'androidx.core:core-ktx:1.10.0'
+
     //Version Variables
     def nav_version = "2.5.3"
     def room_version = "2.5.1"

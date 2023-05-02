@@ -1,31 +1,31 @@
 package com.tommygr.gamequiz.data.repositories
 
 import com.tommygr.gamequiz.domain.repositories.QuizElementRepository
-import com.tommygr.gamequiz.data.source.local.localdatasources.LocalQuizElementDataSource
 import com.tommygr.gamequiz.data.source.remote.remotedatasources.RemoteQuizElementDataSource
 import com.tommygr.gamequiz.domain.domainmodels.QuizElementDomainModel
 import com.tommygr.gamequiz.data.source.datamodels.mapper.toDomainModel
+import com.tommygr.gamequiz.data.source.local.database.QuizElementDao
 import kotlinx.coroutines.flow.map
 
-class QuizElementRepositoryImpl(private val localQuizElementDataSource: LocalQuizElementDataSource
-                                , private val remoteQuizElementDataSource: RemoteQuizElementDataSource):
+class QuizElementRepositoryImpl(private val localDataSource: QuizElementDao
+                                , private val remoteDataSource: RemoteQuizElementDataSource):
     QuizElementRepository {
 
-    override fun observeAllElements() = localQuizElementDataSource.observeAllElements().map { it.toDomainModel() }
+    override fun observeAllElements() = localDataSource.observeAllQuizElements().map { it.toDomainModel() }
 
-    override suspend fun getAllElements() = localQuizElementDataSource.getAllElements().toDomainModel()
-    override suspend fun getAllNotShownElements(): List<QuizElementDomainModel> = localQuizElementDataSource.getAllNotShownElements().toDomainModel()
+    override suspend fun getAllElements() = localDataSource.getAllQuizElements().toDomainModel()
+    override suspend fun getAllNotShownElements(): List<QuizElementDomainModel> = localDataSource.getAllNotShownElements().toDomainModel()
 
-    override suspend fun getAllNotSolvedElements(): List<QuizElementDomainModel> = localQuizElementDataSource.getAllNotSolvedElements().toDomainModel()
+    override suspend fun getAllNotSolvedElements(): List<QuizElementDomainModel> = localDataSource.getAllNotSolvedElements().toDomainModel()
 
     override suspend fun refreshElements() {
-        val elements = remoteQuizElementDataSource.getAllElements()
-        localQuizElementDataSource.insertAll(elements)
+        val elements = remoteDataSource.getAllElements()
+        localDataSource.insertAll(elements)
     }
 
-    override fun observeElement(id: String) = localQuizElementDataSource.observeElement(id).map { it.toDomainModel() }
+    override fun observeElement(id: String) = localDataSource.observeQuizElement(id).map { it.toDomainModel() }
 
-    override suspend fun getElementById(id: String) = localQuizElementDataSource.getElement(id).toDomainModel()
+    override suspend fun getElementById(id: String) = localDataSource.getQuizElement(id).toDomainModel()
 
     override suspend fun saveElement(quizElementDomainModel: QuizElementDomainModel) {
         TODO("Not yet implemented")
