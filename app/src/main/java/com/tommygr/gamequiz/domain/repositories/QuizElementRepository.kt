@@ -11,6 +11,8 @@ interface QuizElementRepository {
 
     suspend fun getAllNotSolvedElements(): List<QuizElementDomainModel>
 
+    suspend fun insertAll(quizElements: List<QuizElementDomainModel>)
+
     suspend fun refreshElements()
 
     suspend fun clear()

@@ -11,6 +11,8 @@ fun QuizElementDataModel.toDomainModel(): QuizElementDomainModel = QuizElementDo
 
 fun List<QuizElementDataModel>.toDomainModel(): List<QuizElementDomainModel> = map { QuizElementDomainModel(it.id, it.type, it.question, it.options, it.difficulty, it.hint, it.isSolved, it.wasShown) }
 
+fun List<QuizElementDomainModel>.toDataModel(): List<QuizElementDataModel> = map { QuizElementDataModel(it.id, it.type, it.question, it.options, it.difficulty, it.hint, it.isSolved, it.wasShown) }
+
 fun StatisticDataModel.toDomainModel(): StatisticDomainModel = StatisticDomainModel(userId, gamesWon, gamesLost, perfectGames)
 
 fun StatisticDomainModel.toDataModel(): StatisticDataModel = StatisticDataModel(userId, gamesWon, gamesLost, perfectGames)

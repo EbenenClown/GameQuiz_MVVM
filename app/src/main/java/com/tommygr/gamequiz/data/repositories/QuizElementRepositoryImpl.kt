@@ -1,5 +1,6 @@
 package com.tommygr.gamequiz.data.repositories
 
+import com.tommygr.gamequiz.data.source.datamodels.mapper.toDataModel
 import com.tommygr.gamequiz.domain.repositories.QuizElementRepository
 import com.tommygr.gamequiz.data.source.remote.remotedatasources.RemoteQuizElementDataSource
 import com.tommygr.gamequiz.domain.domainmodels.QuizElementDomainModel
@@ -19,6 +20,10 @@ class QuizElementRepositoryImpl(private val localDataSource: QuizElementDao
     override suspend fun refreshElements() {
         val elements = remoteDataSource.getAllElements()
         localDataSource.insertAll(elements)
+    }
+
+    override suspend fun insertAll(quizElements: List<QuizElementDomainModel>) {
+        localDataSource.insertAll(quizElements.toDataModel())
     }
 
     override suspend fun clear() {

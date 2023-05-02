@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "cd4df47999d4dd15b840d56de563b673",
+    "identityHash": "fd0e03e60dd763c4fe872acfbdf0169d",
     "entities": [
       {
         "tableName": "user",
@@ -44,7 +44,7 @@
       },
       {
         "tableName": "quizelement",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `type` INTEGER NOT NULL, `question` TEXT NOT NULL, `options` TEXT NOT NULL, `difficulty` INTEGER NOT NULL, `hint` TEXT NOT NULL, `isSolved` INTEGER NOT NULL, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `type` INTEGER NOT NULL, `question` TEXT NOT NULL, `options` TEXT NOT NULL, `difficulty` INTEGER NOT NULL, `hint` TEXT NOT NULL, `isSolved` INTEGER NOT NULL, `wasShown` INTEGER NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -85,6 +85,12 @@
           {
             "fieldPath": "isSolved",
             "columnName": "isSolved",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "wasShown",
+            "columnName": "wasShown",
             "affinity": "INTEGER",
             "notNull": true
           }
@@ -140,7 +146,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'cd4df47999d4dd15b840d56de563b673')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'fd0e03e60dd763c4fe872acfbdf0169d')"
     ]
   }
 }
