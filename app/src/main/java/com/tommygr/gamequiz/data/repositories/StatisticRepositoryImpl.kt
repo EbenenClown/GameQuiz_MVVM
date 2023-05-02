@@ -2,7 +2,7 @@ package com.tommygr.gamequiz.data.repositories
 
 import com.tommygr.gamequiz.data.source.datamodels.mapper.toDataModel
 import com.tommygr.gamequiz.data.source.datamodels.mapper.toDomainModel
-import com.tommygr.gamequiz.data.source.local.database.StatisticDao
+import com.tommygr.gamequiz.data.source.local.daos.StatisticDao
 import com.tommygr.gamequiz.data.source.remote.remotedatasources.RemoteStatisticDataSource
 import com.tommygr.gamequiz.domain.repositories.StatisticRepository
 import com.tommygr.gamequiz.domain.domainmodels.StatisticDomainModel
@@ -27,10 +27,12 @@ class StatisticRepositoryImpl(private val localDataSource: StatisticDao
 
     override suspend fun updateStatistic(statisticDomainModel: StatisticDomainModel) {
         localDataSource.updateStatistic(statisticDomainModel.toDataModel())
+        remoteDataSource.updateStatistic(statisticDomainModel.toDataModel())
     }
 
     override suspend fun deleteStatistic(userId: String) {
         localDataSource.deleteStatistic(userId)
+        remoteDataSource.deleteStatisticWithId(userId)
     }
 
     override suspend fun clear() {

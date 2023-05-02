@@ -9,14 +9,7 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.withContext
 
 class RemoteQuizElementDataSource(private val firebaseAPI: FirebaseAPI, private val dispatcher: CoroutineDispatcher = Dispatchers.IO) {
-     fun observeAllElements(): Flow<List<QuizElementDataModel>> = flow { emit(firebaseAPI.getAll()) }
-
      suspend fun getAllElements(): List<QuizElementDataModel> = withContext(dispatcher) {
         return@withContext firebaseAPI.getAll()
     }
-
-     suspend fun clear() {
-        TODO("Not yet implemented")
-    }
-
 }

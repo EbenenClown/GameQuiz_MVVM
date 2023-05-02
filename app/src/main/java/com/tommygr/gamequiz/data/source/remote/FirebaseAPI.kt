@@ -15,21 +15,6 @@ interface FirebaseAPI {
     @GET("/quizelements")
     fun getAll(): List<QuizElementDataModel>
 
-    @GET("/quizelements/{id}")
-    fun getElementById(@Path("id")id: String): QuizElementDataModel
-
-    @POST("/quizelements/")
-    fun saveELementList(quizElementDataModels: List<QuizElementDataModel>)
-
-    @POST("/quizelements/")
-    fun saveElement(element: QuizElementDataModel)
-
-    @PUT("quizelements/{id}")
-    fun updateElement(@Path("id")id: String, @Body element: QuizElementDataModel)
-
-    @DELETE("quizelements/{id}")
-    fun deleteElement(@Path("id")id: String)
-
     @GET("/statistics/{id}")
     fun getStatisticById(@Path("id")userId: String): StatisticDataModel
 

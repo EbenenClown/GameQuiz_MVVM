@@ -2,7 +2,7 @@ package com.tommygr.gamequiz.data.repositories
 
 import com.tommygr.gamequiz.data.source.datamodels.mapper.toDataModel
 import com.tommygr.gamequiz.data.source.datamodels.mapper.toDomainModel
-import com.tommygr.gamequiz.data.source.local.database.UserDao
+import com.tommygr.gamequiz.data.source.local.daos.UserDao
 import com.tommygr.gamequiz.data.source.remote.remotedatasources.RemoteUserDataSource
 import com.tommygr.gamequiz.domain.repositories.UserRepository
 import com.tommygr.gamequiz.domain.domainmodels.UserDomainModel
