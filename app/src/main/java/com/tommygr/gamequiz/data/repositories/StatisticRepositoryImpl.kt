@@ -8,9 +8,10 @@ import com.tommygr.gamequiz.domain.repositories.StatisticRepository
 import com.tommygr.gamequiz.domain.domainmodels.StatisticDomainModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import javax.inject.Inject
 
-class StatisticRepositoryImpl(private val localDataSource: StatisticDao
-                                , private val remoteDataSource: RemoteStatisticDataSource): StatisticRepository {
+class StatisticRepositoryImpl @Inject constructor(private val localDataSource: StatisticDao
+                                                 , private val remoteDataSource: RemoteStatisticDataSource): StatisticRepository {
     override fun observeStatistic(forceUpdate: Boolean): Flow<StatisticDomainModel> = localDataSource.observeStatistic().map { it.toDomainModel() }
 
     override suspend fun getStatistic(forceUpdate: Boolean): StatisticDomainModel = localDataSource.getStatistic().toDomainModel()

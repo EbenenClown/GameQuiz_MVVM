@@ -1,8 +1,9 @@
 package com.tommygr.gamequiz.domain.usecases
 
 import com.tommygr.gamequiz.domain.repositories.QuizElementRepository
+import javax.inject.Inject
 
-class ResetQuizElementsUseCase(private val quizElementRepository: QuizElementRepository) {
+class ResetQuizElementsUseCase @Inject constructor(private val quizElementRepository: QuizElementRepository) {
     suspend operator fun invoke() {
         val allElementsList = quizElementRepository.getAllElements()
         val updatedElements = allElementsList.map {

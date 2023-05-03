@@ -4,8 +4,9 @@ import com.tommygr.gamequiz.domain.domainmodels.GameDomainModel
 import com.tommygr.gamequiz.domain.domainmodels.QuizElementDomainModel
 import com.tommygr.gamequiz.domain.repositories.QuizElementRepository
 import com.tommygr.gamequiz.domain.repositories.StatisticRepository
+import javax.inject.Inject
 
-class GetGameWithSizeUseCase(private val quizElementRepository: QuizElementRepository, private val statisticRepository: StatisticRepository) {
+class GetGameWithSizeUseCase @Inject constructor(private val quizElementRepository: QuizElementRepository, private val statisticRepository: StatisticRepository) {
     suspend operator fun invoke(gameSize: Int): GameDomainModel {
         val notShownShuffledList = quizElementRepository.getAllNotShownElements().shuffled()
         val sortedList = mutableListOf<QuizElementDomainModel>()

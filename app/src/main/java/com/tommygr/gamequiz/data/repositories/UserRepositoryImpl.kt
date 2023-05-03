@@ -9,8 +9,9 @@ import com.tommygr.gamequiz.domain.domainmodels.UserDomainModel
 import com.tommygr.gamequiz.util.Resource
 import kotlinx.coroutines.tasks.await
 import java.lang.Exception
+import javax.inject.Inject
 
-class UserRepositoryImpl(private val localUserDataSource: UserDao, private val remoteUserDataSource: RemoteUserDataSource): UserRepository {
+class UserRepositoryImpl @Inject constructor(private val localUserDataSource: UserDao, private val remoteUserDataSource: RemoteUserDataSource): UserRepository {
 
     override suspend fun getUser(forceUpdate: Boolean): UserDomainModel = localUserDataSource.getUser().toDomainModel()
 

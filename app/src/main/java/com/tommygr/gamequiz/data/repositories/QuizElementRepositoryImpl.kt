@@ -7,8 +7,9 @@ import com.tommygr.gamequiz.domain.domainmodels.QuizElementDomainModel
 import com.tommygr.gamequiz.data.source.datamodels.mapper.toDomainModel
 import com.tommygr.gamequiz.data.source.local.daos.QuizElementDao
 import kotlinx.coroutines.flow.map
+import javax.inject.Inject
 
-class QuizElementRepositoryImpl(private val localDataSource: QuizElementDao
+class QuizElementRepositoryImpl @Inject constructor(private val localDataSource: QuizElementDao
                                 , private val remoteDataSource: RemoteQuizElementDataSource):
     QuizElementRepository {
 

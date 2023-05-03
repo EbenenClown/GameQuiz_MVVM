@@ -1,4 +1,4 @@
-package com.tommygr.gamequiz.di
+package com.tommygr.gamequiz.data.di
 
 import android.content.Context
 import androidx.room.Room

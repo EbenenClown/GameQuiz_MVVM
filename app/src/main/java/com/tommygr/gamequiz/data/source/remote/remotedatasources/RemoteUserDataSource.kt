@@ -13,8 +13,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class RemoteUserDataSource(private val firebaseAuth: FirebaseAuth, private val dispatcher: CoroutineDispatcher = Dispatchers.IO) {
+class RemoteUserDataSource @Inject constructor(private val firebaseAuth: FirebaseAuth, private val dispatcher: CoroutineDispatcher = Dispatchers.IO) {
 
      suspend fun getUser() = withContext(dispatcher) {
          return@withContext Firebase.auth.currentUser
