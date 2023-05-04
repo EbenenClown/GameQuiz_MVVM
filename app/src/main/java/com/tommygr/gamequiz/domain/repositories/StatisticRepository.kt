@@ -3,20 +3,21 @@ package com.tommygr.gamequiz.domain.repositories
 
 
 import com.tommygr.gamequiz.domain.domainmodels.StatisticDomainModel
+import com.tommygr.gamequiz.util.Resource
 import kotlinx.coroutines.flow.Flow
 
 interface StatisticRepository {
-    fun observeStatistic(forceUpdate: Boolean = false): Flow<StatisticDomainModel>
+    fun observeStatistic(forceUpdate: Boolean = false): Resource<Flow<StatisticDomainModel>>
 
-    suspend fun getStatistic(forceUpdate: Boolean = false): StatisticDomainModel
+    suspend fun getStatistic(forceUpdate: Boolean = false): Resource<StatisticDomainModel>
 
-    suspend fun refreshStatistic(userId: String)
+    suspend fun refreshStatistic(userId: String): Resource<StatisticDomainModel>
 
-    suspend fun addNewStatistic(statisticDomainModel: StatisticDomainModel)
+    suspend fun addNewStatistic(statisticDomainModel: StatisticDomainModel): Resource<Unit>
 
-    suspend fun updateStatistic(statisticDomainModel: StatisticDomainModel)
+    suspend fun updateStatistic(statisticDomainModel: StatisticDomainModel): Resource<Unit>
 
-    suspend fun deleteStatistic(userId: String)
+    suspend fun deleteStatistic(userId: String): Resource<Unit>
 
     suspend fun clear()
 }

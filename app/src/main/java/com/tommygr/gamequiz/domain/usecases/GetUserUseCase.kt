@@ -1,8 +1,10 @@
 package com.tommygr.gamequiz.domain.usecases
 
+import com.tommygr.gamequiz.domain.domainmodels.UserDomainModel
 import com.tommygr.gamequiz.domain.repositories.UserRepository
+import com.tommygr.gamequiz.util.Resource
 import javax.inject.Inject
 
 class GetUserUseCase @Inject constructor(private val userRepository: UserRepository) {
-    suspend operator fun invoke(forceUpdate: Boolean = false) = userRepository.getUser(forceUpdate)
+    suspend operator fun invoke(forceUpdate: Boolean = false): Resource<UserDomainModel> = userRepository.getUser(forceUpdate)
 }
