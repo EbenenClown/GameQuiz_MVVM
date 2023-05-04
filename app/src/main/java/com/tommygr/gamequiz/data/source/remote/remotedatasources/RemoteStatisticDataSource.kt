@@ -10,10 +10,10 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class RemoteStatisticDataSource @Inject constructor(private val firebaseAPI: FirebaseAPI, private val dispatcher: CoroutineDispatcher = Dispatchers.IO) {
-     fun observeStatistic(userId: String): Flow<StatisticDataModel> = flow { emit(firebaseAPI.getStatisticById(userId)) }
+     fun observeStatistic(userId: String): Flow<StatisticDataModel> = flow { emit(firebaseAPI.getStatisticById(userId).values.first()) }
 
      suspend fun getStatistic(userId: String): StatisticDataModel = withContext(dispatcher) {
-        return@withContext firebaseAPI.getStatisticById(userId)
+        return@withContext firebaseAPI.getStatisticById(userId).values.first()
     }
 
      suspend fun addNewStatistic(statisticDataModel: StatisticDataModel) = withContext(dispatcher) {

@@ -1,6 +1,12 @@
 package com.tommygr.gamequiz.data.di
 
+import com.google.firebase.auth.FirebaseAuth
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import com.tommygr.gamequiz.data.source.remote.FirebaseAPI
+import com.tommygr.gamequiz.data.source.remote.remotedatasources.RemoteQuizElementDataSource
+import com.tommygr.gamequiz.data.source.remote.remotedatasources.RemoteStatisticDataSource
+import com.tommygr.gamequiz.data.source.remote.remotedatasources.RemoteUserDataSource
 import com.tommygr.gamequiz.util.Constants
 import dagger.Module
 import dagger.Provides
@@ -24,33 +30,15 @@ object NetworkModule {
     }
 
     @Provides
-    fun providesLoggingInterceptor(): HttpLoggingInterceptor {
-        return HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
-    }
-
-    @Provides
-    fun provideOkHttpClient(loggingInterceptor: HttpLoggingInterceptor): OkHttpClient {
-        val okHttpClient = OkHttpClient().newBuilder()
-
-        okHttpClient.callTimeout(40, TimeUnit.SECONDS)
-        okHttpClient.connectTimeout(40, TimeUnit.SECONDS)
-        okHttpClient.readTimeout(40, TimeUnit.SECONDS)
-        okHttpClient.writeTimeout(40, TimeUnit.SECONDS)
-        okHttpClient.addInterceptor(loggingInterceptor)
-        okHttpClient.build()
-        return okHttpClient.build()
-    }
-
-    @Provides
     fun provideConverterFactory(): Converter.Factory {
-        return GsonConverterFactory.create()
+        val gson = GsonBuilder().setLenient().create()
+        return GsonConverterFactory.create(gson)
     }
 
     @Provides
-    fun provideRetrofitClient(okHttpClient: OkHttpClient, baseUrl: String, converterFactory: Converter.Factory): Retrofit {
+    fun provideRetrofitClient(baseUrl: String, converterFactory: Converter.Factory): Retrofit {
         return Retrofit.Builder()
             .baseUrl(baseUrl)
-            .client(okHttpClient)
             .addConverterFactory(converterFactory)
             .build()
     }
@@ -59,5 +47,20 @@ object NetworkModule {
     @Singleton
     fun provideRestApiService(retrofit: Retrofit): FirebaseAPI {
         return retrofit.create(FirebaseAPI::class.java)
+    }
+
+    @Provides
+    fun provideRemoteQuizElementDataSource(firebaseAPI: FirebaseAPI): RemoteQuizElementDataSource {
+        return RemoteQuizElementDataSource(firebaseAPI)
+    }
+
+    @Provides
+    fun provideRemoteStatisticDataSource(firebaseAPI: FirebaseAPI): RemoteStatisticDataSource {
+        return RemoteStatisticDataSource(firebaseAPI)
+    }
+
+    @Provides
+    fun provideRemoteUserDataSource(firebaseAuth: FirebaseAuth): RemoteUserDataSource {
+        return RemoteUserDataSource(firebaseAuth)
     }
 }

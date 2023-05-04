@@ -13,6 +13,8 @@ interface QuizElementRepository {
 
     suspend fun insertAll(quizElements: List<QuizElementDomainModel>)
 
+    suspend fun saveElement(quizElement: QuizElementDomainModel)
+
     suspend fun refreshElements()
 
     suspend fun clear()
