@@ -8,19 +8,31 @@ import com.tommygr.gamequiz.domain.repositories.UserRepository
 import com.tommygr.gamequiz.domain.domainmodels.UserDomainModel
 import com.tommygr.gamequiz.util.Resource
 import kotlinx.coroutines.tasks.await
-import java.lang.Exception
+import javax.inject.Inject
+import kotlin.Exception
 
-class UserRepositoryImpl(private val localUserDataSource: UserDao, private val remoteUserDataSource: RemoteUserDataSource): UserRepository {
+class UserRepositoryImpl @Inject constructor(private val localUserDataSource: UserDao, private val remoteUserDataSource: RemoteUserDataSource): UserRepository {
 
-    override suspend fun getUser(forceUpdate: Boolean): UserDomainModel = localUserDataSource.getUser().toDomainModel()
+    override suspend fun getUser(forceUpdate: Boolean): Resource<UserDomainModel> {
+        return try {
+            Resource.Success(localUserDataSource.getUser().toDomainModel())
+        } catch (e: Exception) {
+            Resource.Error(e.toString())
+        }
+    }
 
     override suspend fun refreshUser(id: String): Resource<UserDomainModel> {
-        val remoteFirebaseUser = remoteUserDataSource.getUser()
-        remoteFirebaseUser?.let {
-            localUserDataSource.addOrReplaceUser(it.toDataModel())
-            return Resource.Success(it.toDomainModel())
+        return try {
+            val remoteFirebaseUser = remoteUserDataSource.getUser()
+            remoteFirebaseUser?.let {
+                localUserDataSource.addOrReplaceUser(it.toDataModel())
+                    Resource.Success(it.toDomainModel())
+            }
+            Resource.Error("Could not refresh user because no user is logged in")
+        } catch (e: Exception) {
+
+            Resource.Error(e.toString())
         }
-        return Resource.Error("Could not refresh user because no user is logged in")
     }
 
     override suspend fun saveNewUser(userDomainModel: UserDomainModel) {

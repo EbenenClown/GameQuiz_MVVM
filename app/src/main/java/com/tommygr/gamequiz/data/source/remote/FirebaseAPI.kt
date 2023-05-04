@@ -3,27 +3,34 @@ package com.tommygr.gamequiz.data.source.remote
 import com.tommygr.gamequiz.data.source.datamodels.QuizElementDataModel
 import com.tommygr.gamequiz.data.source.datamodels.StatisticDataModel
 import com.tommygr.gamequiz.data.source.datamodels.UserDataModel
+import retrofit2.Call
+import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
+import retrofit2.http.Headers
 import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Path
 
 
 interface FirebaseAPI {
-    @GET("/quizelements")
-    fun getAll(): List<QuizElementDataModel>
+    @GET("/quizelements.json")
+    @Headers("Accepts: application/json")
+    suspend fun getAll(): HashMap<String,QuizElementDataModel>
 
-    @GET("/statistics/{id}")
-    fun getStatisticById(@Path("id")userId: String): StatisticDataModel
+    @POST("/quizelements/.json")
+    suspend fun saveElement(@Body quizElementDataModel: QuizElementDataModel): Response<Void>
 
-    @POST("/statistics/")
-    fun saveStatistic(statisticDataModel: StatisticDataModel)
+    @GET("/statistics/{id}.json")
+    suspend fun getStatisticById(@Path("id")userId: String): HashMap<String, StatisticDataModel>
 
-    @PUT("statistics/{id}")
-    fun updateStatistic(@Path("id")id: String, @Body statisticDataModel: StatisticDataModel)
+    @POST("/statistics/.json")
+    suspend fun saveStatistic(statisticDataModel: StatisticDataModel)
 
-    @DELETE("statistics/{id}")
-    fun deleteStatistic(@Path("id")id: String)
+    @PUT("statistics/{id}.json")
+    suspend fun updateStatistic(@Path("id")id: String, @Body statisticDataModel: StatisticDataModel)
+
+    @DELETE("statistics/{id}.json")
+    suspend fun deleteStatistic(@Path("id")id: String)
 }
