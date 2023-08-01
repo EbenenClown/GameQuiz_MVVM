@@ -1,12 +1,18 @@
 package com.tommygr.gamequiz.ui
 
+import android.content.res.Resources.Theme
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.slideInHorizontally
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -14,11 +20,17 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.paint
+import androidx.compose.ui.graphics.Brush
 
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
@@ -35,13 +47,31 @@ import com.tommygr.gamequiz.R
 
 @Composable
 fun MainScreen(onClicked: () -> Unit) {
+    var isVisible by remember {
+        mutableStateOf(false)
+    }
+
+    Box(modifier = Modifier
+        .fillMaxSize()
+        .background(
+            brush = Brush.horizontalGradient(
+                colors = listOf(
+                    Color(255, 231, 135, 255),
+                    Color(255, 130, 53)
+                )
+            )
+        )) {
+        AnimatedVisibility(visible = true, enter = slideInHorizontally() + fadeIn(), modifier = Modifier.fillMaxWidth()) {
+
+        }
+        Canvas(modifier = Modifier
+            .fillMaxHeight()
+            .offset(x = (-575).dp), onDraw = { drawCircle(Color.Gray, radius = size.height)})
+    }
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .paint(
-                painterResource(id = R.drawable.main_screen_background),
-                contentScale = ContentScale.FillHeight
-            ), verticalArrangement = Arrangement.spacedBy(150.dp)
+            , verticalArrangement = Arrangement.spacedBy(150.dp)
     ) {
         Box() {
             Image(
@@ -89,6 +119,8 @@ fun MainScreen(onClicked: () -> Unit) {
             )
         }
     }
+
+
 }
 
 @Composable
