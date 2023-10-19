@@ -14,9 +14,6 @@ interface QuizElementRepository {
 
     suspend fun insertAll(quizElements: List<QuizElementDomainModel>): Resource<Unit>
 
-    //TODO: Remove; Only for debugging user shouldn't be able to save elements
-    suspend fun saveElement(quizElement: QuizElementDomainModel)
-
     suspend fun refreshElements(): Resource<List<QuizElementDomainModel>>
 
     suspend fun clear()

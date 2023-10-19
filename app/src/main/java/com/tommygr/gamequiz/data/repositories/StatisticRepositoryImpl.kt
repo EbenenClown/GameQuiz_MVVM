@@ -45,6 +45,7 @@ class StatisticRepositoryImpl @Inject constructor(private val localDataSource: S
     override suspend fun addNewStatistic(statisticDomainModel: StatisticDomainModel): Resource<Unit> {
         return try {
             localDataSource.insertNewStatistic(statisticDomainModel.toDataModel())
+            remoteDataSource.addNewStatistic(statisticDomainModel.toDataModel())
             Resource.Success(Unit)
         } catch (e: Exception) {
             Resource.Error(e.toString())
@@ -69,10 +70,4 @@ class StatisticRepositoryImpl @Inject constructor(private val localDataSource: S
             Resource.Error(e.toString())
         }
     }
-
-    override suspend fun clear() {
-        TODO("Not yet implemented")
-    }
-
-
 }

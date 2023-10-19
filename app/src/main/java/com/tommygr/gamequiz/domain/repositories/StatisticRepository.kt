@@ -19,5 +19,4 @@ interface StatisticRepository {
 
     suspend fun deleteStatistic(userId: String): Resource<Unit>
 
-    suspend fun clear()
 }
