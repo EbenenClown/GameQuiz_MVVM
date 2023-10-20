@@ -7,11 +7,11 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface StatisticDao {
-    @Query("SELECT * FROM statistic")
-    fun observeStatistic(): Flow<StatisticDataModel>
+    @Query("SELECT * FROM statistic WHERE userId=:userId")
+    fun observeStatistic(userId: String): Flow<StatisticDataModel>
 
-    @Query("SELECT * FROM statistic")
-    fun getStatistic(): StatisticDataModel
+    @Query("SELECT * FROM statistic WHERE userId=:userId")
+    fun getStatistic(userId: String): StatisticDataModel
 
     @Insert (onConflict = OnConflictStrategy.REPLACE)
     fun insertNewStatistic(statisticDataModel: StatisticDataModel)

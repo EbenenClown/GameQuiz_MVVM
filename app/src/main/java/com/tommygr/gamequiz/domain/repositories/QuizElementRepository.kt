@@ -8,10 +8,6 @@ interface QuizElementRepository {
 
     suspend fun getAllElements(): Resource<List<QuizElementDomainModel>>
 
-    suspend fun getAllNotShownElements(): Resource<List<QuizElementDomainModel>>
-
-    suspend fun getAllNotSolvedElements(): Resource<List<QuizElementDomainModel>>
-
     suspend fun insertAll(quizElements: List<QuizElementDomainModel>): Resource<Unit>
 
     suspend fun refreshElements(): Resource<List<QuizElementDomainModel>>

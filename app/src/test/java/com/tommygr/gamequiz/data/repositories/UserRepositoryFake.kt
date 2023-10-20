@@ -7,7 +7,7 @@ import com.tommygr.gamequiz.util.Resource
 class UserRepositoryFake: UserRepository {
     private val userList = mutableListOf<UserDomainModel>()
     private var isError = false
-    override suspend fun getUser(forceUpdate: Boolean): Resource<UserDomainModel> {
+    override suspend fun getUser(userId: String, forceUpdate: Boolean): Resource<UserDomainModel> {
         userList.firstOrNull()?.let {
             return Resource.Success(it)
         }

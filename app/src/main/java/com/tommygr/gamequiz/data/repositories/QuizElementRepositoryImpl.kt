@@ -24,21 +24,6 @@ class QuizElementRepositoryImpl @Inject constructor(private val localDataSource:
             Resource.Error(e.toString())
         }
     }
-    override suspend fun getAllNotShownElements(): Resource<List<QuizElementDomainModel>> {
-        return try {
-            Resource.Success(localDataSource.getAllNotShownElements().map { it.toDomainModel() })
-        } catch (e: Exception) {
-            Resource.Error(e.toString())
-        }
-    }
-
-    override suspend fun getAllNotSolvedElements(): Resource<List<QuizElementDomainModel>> {
-        return try {
-            Resource.Success(localDataSource.getAllNotSolvedElements().map { it.toDomainModel() })
-        } catch (e: Exception) {
-            Resource.Error(e.toString())
-        }
-    }
 
     override suspend fun refreshElements(): Resource<List<QuizElementDomainModel>> {
         return try {

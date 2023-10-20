@@ -13,18 +13,18 @@ import javax.inject.Inject
 
 class StatisticRepositoryImpl @Inject constructor(private val localDataSource: StatisticDao
                                                  , private val remoteDataSource: RemoteStatisticDataSource): StatisticRepository {
-    override fun observeStatistic(forceUpdate: Boolean): Resource<Flow<StatisticDomainModel>> {
+    override fun observeStatistic(userId: String, forceUpdate: Boolean): Resource<Flow<StatisticDomainModel>> {
         return try {
-            Resource.Success(localDataSource.observeStatistic().map { it.toDomainModel() })
+            Resource.Success(localDataSource.observeStatistic(userId).map { it.toDomainModel() })
         } catch (e: Exception) {
             Resource.Error(e.toString())
         }
 
     }
 
-    override suspend fun getStatistic(forceUpdate: Boolean): Resource<StatisticDomainModel> {
+    override suspend fun getStatistic(userId: String, forceUpdate: Boolean): Resource<StatisticDomainModel> {
         return try {
-            Resource.Success(localDataSource.getStatistic().toDomainModel())
+            Resource.Success(localDataSource.getStatistic(userId).toDomainModel())
         } catch (e: Exception) {
             Resource.Error(e.toString())
         }

@@ -7,9 +7,9 @@ import com.tommygr.gamequiz.util.Resource
 import kotlinx.coroutines.flow.Flow
 
 interface StatisticRepository {
-    fun observeStatistic(forceUpdate: Boolean = false): Resource<Flow<StatisticDomainModel>>
+    fun observeStatistic(userId: String, forceUpdate: Boolean = false): Resource<Flow<StatisticDomainModel>>
 
-    suspend fun getStatistic(forceUpdate: Boolean = false): Resource<StatisticDomainModel>
+    suspend fun getStatistic(userId: String, forceUpdate: Boolean = false): Resource<StatisticDomainModel>
 
     suspend fun refreshStatistic(userId: String): Resource<StatisticDomainModel>
 

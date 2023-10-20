@@ -35,7 +35,7 @@ class GetStatisticUseCaseTest {
         assertThat(result is Resource.Success)
         assertThat((result as Resource.Success).data == statisticDomainModel)
 
-        coVerify { statisticRepository.getStatistic(false) }
+        coVerify { statisticRepository.getStatistic("",false) }
     }
 
     @Test
@@ -48,7 +48,7 @@ class GetStatisticUseCaseTest {
         assertThat(result is Resource.Success)
         assertThat((result as Resource.Success).data == statisticDomainModel)
 
-        coVerify { statisticRepository.getStatistic(true) }
+        coVerify { statisticRepository.getStatistic("1",true) }
     }
 
     @AfterEach
