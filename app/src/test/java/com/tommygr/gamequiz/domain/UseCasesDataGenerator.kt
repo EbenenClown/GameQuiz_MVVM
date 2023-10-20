@@ -13,7 +13,7 @@ fun getQuizDomainModelListWith150Entries(): List<QuizElementDomainModel> {
     return list
 }
 
-private fun quizElementDomainModel(id: String, isSolved: Boolean, wasShown: Boolean) = QuizElementDomainModel(
+fun quizElementDomainModel(id: String, isSolved: Boolean, wasShown: Boolean) = QuizElementDomainModel(
     id = id,
     type = 0,
     question = "Where",
