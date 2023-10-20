@@ -59,19 +59,6 @@ class QuizElementRepositoryImpl @Inject constructor(private val localDataSource:
         }
     }
 
-    //TODO: Remove; Only for debugging user shouldn't be able to save elements
-    override suspend fun saveElement(quizElement: QuizElementDomainModel) {
-        try {
-            remoteDataSource.saveElement(QuizElementDataModel(quizElement.id, quizElement.type,
-                quizElement.question, quizElement.options,
-                quizElement.difficulty, quizElement.hint,
-                quizElement.isSolved, quizElement.wasShown ))
-
-        } catch (e: Exception) {
-            Log.d("test123", "saveElement: ${e.message}")
-        }
-    }
-
     override suspend fun clear() {
         TODO("Not yet implemented")
     }

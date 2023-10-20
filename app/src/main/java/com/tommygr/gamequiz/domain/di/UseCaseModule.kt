@@ -4,7 +4,7 @@ import com.tommygr.gamequiz.domain.repositories.QuizElementRepository
 import com.tommygr.gamequiz.domain.repositories.StatisticRepository
 import com.tommygr.gamequiz.domain.repositories.UserRepository
 import com.tommygr.gamequiz.domain.usecases.CreateLocalUserUseCase
-import com.tommygr.gamequiz.domain.usecases.GetGameWithSizeUseCase
+import com.tommygr.gamequiz.domain.usecases.GetSortedQuestionsUseCase
 import com.tommygr.gamequiz.domain.usecases.GetStatisticUseCase
 import com.tommygr.gamequiz.domain.usecases.GetUserUseCase
 import com.tommygr.gamequiz.domain.usecases.ResetQuizElementsUseCase
@@ -21,7 +21,7 @@ object UseCaseModule {
     fun provideCreateLocalUserUseCase(userRepository: UserRepository): CreateLocalUserUseCase = CreateLocalUserUseCase(userRepository)
 
     @Provides
-    fun provideGetGameWithSizeUseCase(quizElementRepository: QuizElementRepository, statisticRepository: StatisticRepository): GetGameWithSizeUseCase = GetGameWithSizeUseCase(quizElementRepository, statisticRepository)
+    fun provideGetSortedQuestionsUseCase(quizElementRepository: QuizElementRepository): GetSortedQuestionsUseCase = GetSortedQuestionsUseCase(quizElementRepository)
 
     @Provides
     fun provideGetStatisticUseCase(statisticRepository: StatisticRepository) = GetStatisticUseCase(statisticRepository)
