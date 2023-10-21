@@ -27,9 +27,13 @@ class QuizElementRepositoryImpl @Inject constructor(private val localDataSource:
 
     override suspend fun refreshElements(): Resource<List<QuizElementDomainModel>> {
         return try {
-            val elements = remoteDataSource.getAllElements()
-            localDataSource.insertAll(elements)
-            Resource.Success(elements.map { it.toDomainModel() })
+            val elementBody = remoteDataSource.getAllElements().body()
+            elementBody?.values?.let { mutableList ->
+                val immutableList = mutableList.toList()
+                localDataSource.insertAll(immutableList)
+                Resource.Success(immutableList.map { it.toDomainModel() })
+            }
+            Resource.Error("quizElementList is null")
         } catch (e: Exception) {
             Resource.Error(e.toString())
         }

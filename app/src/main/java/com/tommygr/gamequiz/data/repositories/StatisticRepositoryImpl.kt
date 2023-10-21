@@ -33,9 +33,14 @@ class StatisticRepositoryImpl @Inject constructor(private val localDataSource: S
 
     override suspend fun refreshStatistic(userId: String): Resource<StatisticDomainModel> {
         return try {
-            val remoteStatistic = remoteDataSource.getStatistic(userId)
-            localDataSource.insertNewStatistic(remoteStatistic)
-            Resource.Success(remoteStatistic.toDomainModel())
+            val elementBody = remoteDataSource.getStatistic(userId).body()
+            elementBody?.values?.let { statisticCollection ->
+                val statistic = statisticCollection.toList()[0]
+                localDataSource.insertNewStatistic(statistic)
+                Resource.Success(statistic)
+            }
+            Resource.Error("statistic is null")
+
         } catch (e: Exception) {
             Resource.Error(e.toString())
         }

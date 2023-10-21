@@ -69,10 +69,18 @@ android {
             useSupportLibrary true
         }
     }
-
     testOptions {
         unitTests.all {
             useJUnitPlatform()
+        }
+    }
+    android.sourceSets {
+        test {
+            java.srcDirs += "$projectDir/src/testShared"
+        }
+
+        androidTest {
+            java.srcDirs += "$projectDir/src/testShared"
         }
     }
 }

@@ -30,7 +30,7 @@ class GetStatisticUseCaseTest {
         val statisticDomainModel = StatisticDomainModel("1", 1, 1, 1)
         coEvery { statisticRepository.getStatistic(any()) } returns Resource.Success(statisticDomainModel)
 
-        val result = getStatisticUseCase(forceUpdate = false)
+        val result = getStatisticUseCase("1", forceUpdate = false)
 
         assertThat(result is Resource.Success)
         assertThat((result as Resource.Success).data == statisticDomainModel)
@@ -43,7 +43,7 @@ class GetStatisticUseCaseTest {
         val statisticDomainModel = StatisticDomainModel("1", 1, 1, 1)
         coEvery { statisticRepository.getStatistic(any()) } returns Resource.Success(statisticDomainModel)
 
-        val result = getStatisticUseCase(forceUpdate = true)
+        val result = getStatisticUseCase("1", forceUpdate = true)
 
         assertThat(result is Resource.Success)
         assertThat((result as Resource.Success).data == statisticDomainModel)

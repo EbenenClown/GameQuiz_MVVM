@@ -16,6 +16,7 @@ class RemoteQuizElementDataSource @Inject constructor(private val firebaseAPI: F
         return@withContext  firebaseAPI.getAll()
     }
 
+    //TODO remove only for debugging
     suspend fun saveElement(quizElement: QuizElementDataModel): Response<Void> {
         return firebaseAPI.saveElement(quizElement)
     }
