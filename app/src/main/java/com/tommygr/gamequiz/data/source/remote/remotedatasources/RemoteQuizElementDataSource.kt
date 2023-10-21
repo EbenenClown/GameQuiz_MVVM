@@ -12,8 +12,8 @@ import retrofit2.Response
 import javax.inject.Inject
 
 class RemoteQuizElementDataSource @Inject constructor(private val firebaseAPI: FirebaseAPI, private val dispatcher: CoroutineDispatcher = Dispatchers.IO) {
-     suspend fun getAllElements(): List<QuizElementDataModel> = withContext(dispatcher) {
-        return@withContext  firebaseAPI.getAll().values.toList()
+     suspend fun getAllElements(): Response<HashMap<String, QuizElementDataModel>> = withContext(dispatcher) {
+        return@withContext  firebaseAPI.getAll()
     }
 
     suspend fun saveElement(quizElement: QuizElementDataModel): Response<Void> {
