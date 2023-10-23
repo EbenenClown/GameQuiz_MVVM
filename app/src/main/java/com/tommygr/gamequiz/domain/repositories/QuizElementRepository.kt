@@ -12,5 +12,5 @@ interface QuizElementRepository {
 
     suspend fun refreshElements(): Resource<List<QuizElementDomainModel>>
 
-    suspend fun clear()
+    suspend fun clear(): Resource<Unit>
 }

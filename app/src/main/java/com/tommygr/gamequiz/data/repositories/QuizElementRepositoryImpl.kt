@@ -19,7 +19,12 @@ class QuizElementRepositoryImpl @Inject constructor(private val localDataSource:
 
     override suspend fun getAllElements(): Resource<List<QuizElementDomainModel>> {
         return try {
-            Resource.Success(localDataSource.getAllQuizElements().map { it.toDomainModel() })
+            val quizElements = localDataSource.getAllQuizElements()
+            if (quizElements.isEmpty()) {
+                Resource.Error("quizElements are empty")
+            } else {
+                Resource.Success(quizElements.toDomainModel())
+            }
         } catch (e: Exception) {
             Resource.Error(e.toString())
         }
@@ -32,8 +37,7 @@ class QuizElementRepositoryImpl @Inject constructor(private val localDataSource:
                 val immutableList = mutableList.toList()
                 localDataSource.insertAll(immutableList)
                 Resource.Success(immutableList.map { it.toDomainModel() })
-            }
-            Resource.Error("quizElementList is null")
+            } ?: Resource.Error("quizElementList is null")
         } catch (e: Exception) {
             Resource.Error(e.toString())
         }
@@ -48,7 +52,12 @@ class QuizElementRepositoryImpl @Inject constructor(private val localDataSource:
         }
     }
 
-    override suspend fun clear() {
-        TODO("Not yet implemented")
+    override suspend fun clear(): Resource<Unit> {
+       return try {
+            localDataSource.clear()
+            Resource.Success(Unit)
+        } catch (e: Exception) {
+            Resource.Error(e.toString())
+        }
     }
 }

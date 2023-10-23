@@ -161,6 +161,9 @@ dependencies {
     //Turbine
     androidTestImplementation 'app.cash.turbine:turbine:1.0.0'
 
+    //Hamcrest
+    testImplementation 'org.hamcrest:hamcrest:2.2'
+
 }
 
 kapt {
