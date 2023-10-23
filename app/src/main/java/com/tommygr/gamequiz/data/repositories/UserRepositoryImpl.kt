@@ -26,7 +26,7 @@ class UserRepositoryImpl @Inject constructor(private val localUserDataSource: Us
             val remoteFirebaseUser = remoteUserDataSource.getUser()
             remoteFirebaseUser?.let {
                 localUserDataSource.addUser(it.toDataModel())
-                    Resource.Success(it.toDomainModel())
+                Resource.Success(it.toDomainModel())
             }
             Resource.Error("Could not refresh user because no user is logged in")
         } catch (e: Exception) {

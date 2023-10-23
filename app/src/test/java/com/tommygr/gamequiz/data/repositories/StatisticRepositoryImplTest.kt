@@ -36,7 +36,7 @@ class StatisticRepositoryImplTest {
     }
 
     @Test
-    fun `get statistic, retrieve resource success with correct list`() = runBlocking {
+    fun `get statistic, retrieve resource success with correct statistic`() = runBlocking {
         val statistic = StatisticDataModel("1", 1 , 1, 1)
         coEvery { mockLocalDataSource.getStatistic("1") } returns statistic
 
