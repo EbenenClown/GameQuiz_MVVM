@@ -52,6 +52,15 @@ class QuizElementRepositoryImpl @Inject constructor(private val localDataSource:
         }
     }
 
+    override suspend fun updateElement(quizElement: QuizElementDataModel): Resource<Unit> {
+        return try {
+            localDataSource.updateQuizElement(quizElement)
+            Resource.Success(Unit)
+        } catch (e: Exception) {
+            Resource.Error(e.toString())
+        }
+    }
+
     override suspend fun clear(): Resource<Unit> {
        return try {
             localDataSource.clear()

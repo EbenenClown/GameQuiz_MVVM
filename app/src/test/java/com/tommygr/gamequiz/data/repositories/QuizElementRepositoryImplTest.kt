@@ -3,7 +3,6 @@ package com.tommygr.gamequiz.data.repositories
 import assertk.assertThat
 import assertk.assertions.isEqualTo
 import assertk.assertions.isInstanceOf
-import assertk.assertions.isNull
 import assertk.assertions.isTrue
 import com.tommygr.gamequiz.data.local.quizElementDataModel
 import com.tommygr.gamequiz.data.source.datamodels.QuizElementDataModel
@@ -17,7 +16,6 @@ import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.impl.annotations.RelaxedMockK
 import kotlinx.coroutines.runBlocking
-import okhttp3.MediaType
 import okhttp3.ResponseBody
 import okhttp3.ResponseBody.Companion.toResponseBody
 import okio.IOException
@@ -100,7 +98,6 @@ class QuizElementRepositoryImplTest {
         assertThat(refreshedElements.message).isEqualTo("quizElementList is null")
     }
 
-    //TODO add int codes to resource error for better handling
     @Test
     fun `refresh element throws retrofit exception, receive resource error with correct message`() = runBlocking {
         coEvery { mockRemoteDataSource.getAllElements() } throws HttpException(Response.error<ResponseBody>(404 , "".toResponseBody()))
@@ -112,10 +109,33 @@ class QuizElementRepositoryImplTest {
     }
 
     @Test
+    fun `update Element, get resource Success`() = runBlocking {
+        val quizElement = quizElementDataModel("1")
+        coEvery { mockLocalDataSource.updateQuizElement(quizElement) } returns Unit
+
+        val response = quizElementRepositoryImpl.updateElement(quizElement)
+
+        assertThat(response).isInstanceOf(Resource.Success::class)
+        assertThat(response.data).isEqualTo(Unit)
+    }
+
+    @Test
+    fun `update Element throws exception, get resource Error`() = runBlocking {
+        val quizElement = quizElementDataModel("1")
+        coEvery { mockLocalDataSource.updateQuizElement(quizElement) } throws IOException()
+
+        val response = quizElementRepositoryImpl.updateElement(quizElement)
+
+        assertThat(response).isInstanceOf(Resource.Error::class)
+        assertThat(response.message).isEqualTo("java.io.IOException")
+    }
+
+    @Test
     fun `clear table, get resource success`() = runBlocking {
         coEvery { mockLocalDataSource.clear() } returns Unit
 
         val response = quizElementRepositoryImpl.clear()
+
         assertThat(response).isInstanceOf(Resource.Success::class)
         assertThat(response.data).isEqualTo(Unit)
     }
