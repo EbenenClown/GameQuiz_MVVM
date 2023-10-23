@@ -6,5 +6,5 @@ import com.tommygr.gamequiz.util.Resource
 import javax.inject.Inject
 
 class GetStatisticUseCase @Inject constructor(private val statisticRepository: StatisticRepository) {
-    suspend operator fun invoke(userId: String, forceUpdate: Boolean = false): Resource<StatisticDomainModel> = statisticRepository.getStatistic(userId, forceUpdate)
+    suspend operator fun invoke(userId: String): Resource<StatisticDomainModel> = statisticRepository.getStatistic(userId)
 }

@@ -13,16 +13,8 @@ import javax.inject.Inject
 
 class StatisticRepositoryImpl @Inject constructor(private val localDataSource: StatisticDao
                                                  , private val remoteDataSource: RemoteStatisticDataSource): StatisticRepository {
-    override fun observeStatistic(userId: String, forceUpdate: Boolean): Resource<Flow<StatisticDomainModel>> {
-        return try {
-            Resource.Success(localDataSource.observeStatistic(userId).map { it.toDomainModel() })
-        } catch (e: Exception) {
-            Resource.Error(e.toString())
-        }
 
-    }
-
-    override suspend fun getStatistic(userId: String, forceUpdate: Boolean): Resource<StatisticDomainModel> {
+    override suspend fun getStatistic(userId: String): Resource<StatisticDomainModel> {
         return try {
             Resource.Success(localDataSource.getStatistic(userId).toDomainModel())
         } catch (e: Exception) {
@@ -37,10 +29,8 @@ class StatisticRepositoryImpl @Inject constructor(private val localDataSource: S
             elementBody?.values?.let { statisticCollection ->
                 val statistic = statisticCollection.toList()[0]
                 localDataSource.insertNewStatistic(statistic)
-                Resource.Success(statistic)
-            }
-            Resource.Error("statistic is null")
-
+                Resource.Success(statistic.toDomainModel())
+            } ?: Resource.Error("statistic is null")
         } catch (e: Exception) {
             Resource.Error(e.toString())
         }
@@ -50,7 +40,6 @@ class StatisticRepositoryImpl @Inject constructor(private val localDataSource: S
     override suspend fun addNewStatistic(statisticDomainModel: StatisticDomainModel): Resource<Unit> {
         return try {
             localDataSource.insertNewStatistic(statisticDomainModel.toDataModel())
-            remoteDataSource.addNewStatistic(statisticDomainModel.toDataModel())
             Resource.Success(Unit)
         } catch (e: Exception) {
             Resource.Error(e.toString())

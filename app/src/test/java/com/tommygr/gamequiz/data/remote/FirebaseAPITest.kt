@@ -36,15 +36,6 @@ class FirebaseAPITest {
         assertThat(response).isEqualTo(mockResponse)
     }
 
-    @Test
-    fun testSaveQuizElement() = runBlocking {
-        coEvery { firebaseAPI.saveElement(any()) } returns Response.success(null)
-
-        val response = firebaseAPI.saveElement(quizElementDataModel("1"))
-
-        assertThat(response).isEqualTo(Response.success(null))
-    }
-
     @AfterEach
     fun tearDown() {
         clearMocks(firebaseAPI)
