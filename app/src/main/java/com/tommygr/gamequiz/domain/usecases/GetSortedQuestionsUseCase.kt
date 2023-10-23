@@ -7,16 +7,17 @@ import javax.inject.Inject
 
 class GetSortedQuestionsUseCase @Inject constructor(private val quizElementRepository: QuizElementRepository) {
     suspend operator fun invoke(gameSize: Int): Resource<List<QuizElementDomainModel>> {
-        val allElements = quizElementRepository.getAllElements().data?.shuffled()
+        val allElementsResource = quizElementRepository.getAllElements()
         val filteredList = mutableListOf<QuizElementDomainModel>()
 
-        if(!allElements.isNullOrEmpty()) {
+        return if(allElementsResource is Resource.Success) {
+            //room list can't be null or empty, cause it's checked in repository and results in Resource.Error -> data!! is safe
+            val allElements = allElementsResource.data!!
             allElements.sortedWith(compareBy<QuizElementDomainModel>{it.wasShown}.thenBy {it.isSolved})
             filteredList += if(gameSize > 0) allElements.take(gameSize) else allElements
+            Resource.Success(filteredList)
         } else {
-            return Resource.Error("elements are empty or null")
+            allElementsResource
         }
-
-        return Resource.Success(filteredList)
     }
 }
