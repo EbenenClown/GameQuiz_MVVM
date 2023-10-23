@@ -13,9 +13,9 @@ import kotlin.Exception
 
 class UserRepositoryImpl @Inject constructor(private val localUserDataSource: UserDao, private val remoteUserDataSource: RemoteUserDataSource): UserRepository {
 
-    override suspend fun getUser(forceUpdate: Boolean): Resource<UserDomainModel> {
+    override suspend fun getUser(userId: String, forceUpdate: Boolean): Resource<UserDomainModel> {
         return try {
-            Resource.Success(localUserDataSource.getUser().toDomainModel())
+            Resource.Success(localUserDataSource.getUser(userId).toDomainModel())
         } catch (e: Exception) {
             Resource.Error(e.toString())
         }
@@ -25,8 +25,8 @@ class UserRepositoryImpl @Inject constructor(private val localUserDataSource: Us
         return try {
             val remoteFirebaseUser = remoteUserDataSource.getUser()
             remoteFirebaseUser?.let {
-                localUserDataSource.addOrReplaceUser(it.toDataModel())
-                    Resource.Success(it.toDomainModel())
+                localUserDataSource.addUser(it.toDataModel())
+                Resource.Success(it.toDomainModel())
             }
             Resource.Error("Could not refresh user because no user is logged in")
         } catch (e: Exception) {
@@ -36,7 +36,7 @@ class UserRepositoryImpl @Inject constructor(private val localUserDataSource: Us
     }
 
     override suspend fun saveNewUser(userDomainModel: UserDomainModel) {
-        localUserDataSource.addOrReplaceUser(userDomainModel.toDataModel())
+        localUserDataSource.addUser(userDomainModel.toDataModel())
     }
 
     override suspend fun registerUserWithEmailAndPassword(email: String, password: String): Resource<Unit> {

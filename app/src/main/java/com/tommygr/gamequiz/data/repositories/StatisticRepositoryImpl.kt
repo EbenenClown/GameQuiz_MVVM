@@ -13,18 +13,10 @@ import javax.inject.Inject
 
 class StatisticRepositoryImpl @Inject constructor(private val localDataSource: StatisticDao
                                                  , private val remoteDataSource: RemoteStatisticDataSource): StatisticRepository {
-    override fun observeStatistic(forceUpdate: Boolean): Resource<Flow<StatisticDomainModel>> {
-        return try {
-            Resource.Success(localDataSource.observeStatistic().map { it.toDomainModel() })
-        } catch (e: Exception) {
-            Resource.Error(e.toString())
-        }
 
-    }
-
-    override suspend fun getStatistic(forceUpdate: Boolean): Resource<StatisticDomainModel> {
+    override suspend fun getStatistic(userId: String): Resource<StatisticDomainModel> {
         return try {
-            Resource.Success(localDataSource.getStatistic().toDomainModel())
+            Resource.Success(localDataSource.getStatistic(userId).toDomainModel())
         } catch (e: Exception) {
             Resource.Error(e.toString())
         }
@@ -33,9 +25,12 @@ class StatisticRepositoryImpl @Inject constructor(private val localDataSource: S
 
     override suspend fun refreshStatistic(userId: String): Resource<StatisticDomainModel> {
         return try {
-            val remoteStatistic = remoteDataSource.getStatistic(userId)
-            localDataSource.insertNewStatistic(remoteStatistic)
-            Resource.Success(remoteStatistic.toDomainModel())
+            val elementBody = remoteDataSource.getStatistic(userId).body()
+            elementBody?.values?.let { statisticCollection ->
+                val statistic = statisticCollection.toList()[0]
+                localDataSource.insertNewStatistic(statistic)
+                Resource.Success(statistic.toDomainModel())
+            } ?: Resource.Error("statistic is null")
         } catch (e: Exception) {
             Resource.Error(e.toString())
         }
@@ -45,7 +40,6 @@ class StatisticRepositoryImpl @Inject constructor(private val localDataSource: S
     override suspend fun addNewStatistic(statisticDomainModel: StatisticDomainModel): Resource<Unit> {
         return try {
             localDataSource.insertNewStatistic(statisticDomainModel.toDataModel())
-            remoteDataSource.addNewStatistic(statisticDomainModel.toDataModel())
             Resource.Success(Unit)
         } catch (e: Exception) {
             Resource.Error(e.toString())

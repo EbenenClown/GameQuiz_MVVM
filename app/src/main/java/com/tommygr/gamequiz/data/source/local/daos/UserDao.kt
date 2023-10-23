@@ -7,13 +7,13 @@ import com.tommygr.gamequiz.data.source.datamodels.UserDataModel
 @Dao
 interface UserDao {
 
-    @Query("SELECT * FROM user")
-    fun getUser(): UserDataModel
+    @Query("SELECT * FROM user WHERE userId=:userId")
+    fun getUser(userId: String): UserDataModel
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun addOrReplaceUser(userDataModel: UserDataModel)
+    fun addUser(userDataModel: UserDataModel)
 
-    @Update
+    @Update(onConflict = OnConflictStrategy.REPLACE)
     fun updateUser(userDataModel: UserDataModel)
 
     @Delete

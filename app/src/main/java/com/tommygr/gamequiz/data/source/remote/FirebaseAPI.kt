@@ -17,13 +17,13 @@ import retrofit2.http.Path
 interface FirebaseAPI {
     @GET("/quizelements.json")
     @Headers("Accepts: application/json")
-    suspend fun getAll(): HashMap<String,QuizElementDataModel>
+    suspend fun getAll(): Response<HashMap<String,QuizElementDataModel>>
 
     @POST("/quizelements/.json")
     suspend fun saveElement(@Body quizElementDataModel: QuizElementDataModel): Response<Void>
 
     @GET("/statistics/{id}.json")
-    suspend fun getStatisticById(@Path("id")userId: String): HashMap<String, StatisticDataModel>
+    suspend fun getStatisticById(@Path("id")userId: String): Response<HashMap<String, StatisticDataModel>>
 
     @POST("/statistics/.json")
     suspend fun saveStatistic(statisticDataModel: StatisticDataModel)

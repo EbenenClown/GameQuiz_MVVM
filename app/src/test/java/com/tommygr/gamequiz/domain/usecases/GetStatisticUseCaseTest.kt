@@ -1,6 +1,8 @@
 package com.tommygr.gamequiz.domain.usecases
 
 import assertk.assertThat
+import assertk.assertions.isEqualTo
+import assertk.assertions.isInstanceOf
 import com.tommygr.gamequiz.domain.domainmodels.StatisticDomainModel
 import com.tommygr.gamequiz.domain.repositories.StatisticRepository
 import com.tommygr.gamequiz.util.Resource
@@ -28,27 +30,14 @@ class GetStatisticUseCaseTest {
     @Test
     fun `test getting statistic successfully`() = runBlocking {
         val statisticDomainModel = StatisticDomainModel("1", 1, 1, 1)
-        coEvery { statisticRepository.getStatistic(any()) } returns Resource.Success(statisticDomainModel)
+        coEvery { statisticRepository.getStatistic("1") } returns Resource.Success(statisticDomainModel)
 
-        val result = getStatisticUseCase(forceUpdate = false)
+        val result = getStatisticUseCase("1",)
 
-        assertThat(result is Resource.Success)
-        assertThat((result as Resource.Success).data == statisticDomainModel)
+        assertThat(result).isInstanceOf(Resource.Success::class.java)
+        assertThat(result.data).isEqualTo(statisticDomainModel)
 
-        coVerify { statisticRepository.getStatistic(false) }
-    }
-
-    @Test
-    fun `test getting statistic with force update`() = runBlocking {
-        val statisticDomainModel = StatisticDomainModel("1", 1, 1, 1)
-        coEvery { statisticRepository.getStatistic(any()) } returns Resource.Success(statisticDomainModel)
-
-        val result = getStatisticUseCase(forceUpdate = true)
-
-        assertThat(result is Resource.Success)
-        assertThat((result as Resource.Success).data == statisticDomainModel)
-
-        coVerify { statisticRepository.getStatistic(true) }
+        coVerify { statisticRepository.getStatistic("1") }
     }
 
     @AfterEach

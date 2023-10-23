@@ -1,15 +1,12 @@
 package com.tommygr.gamequiz.domain.usecases
 
-import com.tommygr.gamequiz.domain.getQuizDomainModelListWith150Entries
 import com.tommygr.gamequiz.domain.quizElementDomainModel
 import com.tommygr.gamequiz.domain.repositories.QuizElementRepository
-import com.tommygr.gamequiz.util.Resource
 import io.mockk.MockKAnnotations
 import io.mockk.clearMocks
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.impl.annotations.RelaxedMockK
-import io.mockk.verify
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Assertions.*
 

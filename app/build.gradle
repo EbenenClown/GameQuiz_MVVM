@@ -69,10 +69,18 @@ android {
             useSupportLibrary true
         }
     }
-
     testOptions {
         unitTests.all {
             useJUnitPlatform()
+        }
+    }
+    android.sourceSets {
+        test {
+            java.srcDirs += "$projectDir/src/testShared"
+        }
+
+        androidTest {
+            java.srcDirs += "$projectDir/src/testShared"
         }
     }
 }
@@ -98,6 +106,7 @@ dependencies {
     androidTestImplementation 'androidx.compose.ui:ui-test-junit4'
     debugImplementation 'androidx.compose.ui:ui-tooling'
     debugImplementation 'androidx.compose.ui:ui-test-manifest'
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.0"
 
     //Version Variables
     def nav_version = "2.6.0"
@@ -147,6 +156,13 @@ dependencies {
 
     //AssertK
     testImplementation("com.willowtreeapps.assertk:assertk:0.27.0")
+    androidTestImplementation("com.willowtreeapps.assertk:assertk:0.27.0")
+
+    //Turbine
+    androidTestImplementation 'app.cash.turbine:turbine:1.0.0'
+
+    //Hamcrest
+    testImplementation 'org.hamcrest:hamcrest:2.2'
 
 }
 

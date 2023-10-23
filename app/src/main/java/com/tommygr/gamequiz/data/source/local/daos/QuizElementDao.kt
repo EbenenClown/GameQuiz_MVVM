@@ -12,12 +12,6 @@ interface QuizElementDao {
     @Query("SELECT * FROM quizElement")
     fun getAllQuizElements(): List<QuizElementDataModel>
 
-    @Query("SELECT * FROM quizElement WHERE isSolved=0")
-    fun getAllNotSolvedElements(): List<QuizElementDataModel>
-
-    @Query("SELECT * FROM quizElement WHERE wasShown=0")
-    fun getAllNotShownElements(): List<QuizElementDataModel>
-
     @Query("SELECT * FROM quizElement WHERE id=:id")
     fun observeQuizElement(id: String): Flow<QuizElementDataModel>
 

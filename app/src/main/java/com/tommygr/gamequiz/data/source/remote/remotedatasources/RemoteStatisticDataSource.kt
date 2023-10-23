@@ -7,13 +7,13 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.withContext
+import retrofit2.Response
 import javax.inject.Inject
 
 class RemoteStatisticDataSource @Inject constructor(private val firebaseAPI: FirebaseAPI, private val dispatcher: CoroutineDispatcher = Dispatchers.IO) {
-     fun observeStatistic(userId: String): Flow<StatisticDataModel> = flow { emit(firebaseAPI.getStatisticById(userId).values.first()) }
 
-     suspend fun getStatistic(userId: String): StatisticDataModel = withContext(dispatcher) {
-        return@withContext firebaseAPI.getStatisticById(userId).values.first()
+     suspend fun getStatistic(userId: String): Response<HashMap<String, StatisticDataModel>> = withContext(dispatcher) {
+        return@withContext firebaseAPI.getStatisticById(userId)
     }
 
      suspend fun addNewStatistic(statisticDataModel: StatisticDataModel) = withContext(dispatcher) {
@@ -27,9 +27,4 @@ class RemoteStatisticDataSource @Inject constructor(private val firebaseAPI: Fir
      suspend fun deleteStatisticWithId(userId: String) = withContext(dispatcher) {
         return@withContext firebaseAPI.deleteStatistic(userId)
     }
-
-     suspend fun clear() {
-        TODO("Not yet implemented")
-    }
-
 }
