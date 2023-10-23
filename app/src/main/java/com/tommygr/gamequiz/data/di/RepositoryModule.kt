@@ -13,7 +13,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-abstract class RepositoryModules {
+abstract class RepositoryModule {
     @Binds
     @Singleton
     abstract fun provideQuizElementRepository(quizElementRepositoryImpl: QuizElementRepositoryImpl): QuizElementRepository
