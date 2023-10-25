@@ -43,6 +43,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.tommygr.gamequiz.R
+import com.tommygr.gamequiz.ui.ui.composables.StandardButton
 
 
 @Composable
@@ -61,9 +62,6 @@ fun MainScreen(onClicked: () -> Unit) {
                 )
             )
         )) {
-        AnimatedVisibility(visible = true, enter = slideInHorizontally() + fadeIn(), modifier = Modifier.fillMaxWidth()) {
-
-        }
         Canvas(modifier = Modifier
             .fillMaxHeight()
             .offset(x = (-575).dp), onDraw = { drawCircle(Color.Gray, radius = size.height)})
@@ -121,34 +119,6 @@ fun MainScreen(onClicked: () -> Unit) {
     }
 
 
-}
-
-@Composable
-fun StandardButton(
-    text: String,
-    modifier: Modifier = Modifier,
-    backgroundColor: Color = Color.Black,
-    onClicked: () -> Unit
-) {
-    OutlinedButton(
-        modifier = modifier
-            .fillMaxWidth()
-            .height(70.dp)
-            .padding(PaddingValues(end = 40.dp))
-            .offset(x = (-16).dp),
-        colors = ButtonDefaults.buttonColors(containerColor = backgroundColor),
-        border = BorderStroke(6.dp, Color.White),
-        shape = RoundedCornerShape(topStartPercent = 0, topEndPercent = 40, bottomEndPercent = 40),
-        onClick = onClicked
-    ) {
-        Text(
-            text = text,
-            modifier = Modifier.fillMaxWidth(),
-            textAlign = TextAlign.End,
-            fontSize = 20.sp,
-            fontWeight = FontWeight.Bold
-        )
-    }
 }
 
 @Preview(showBackground = true, showSystemUi = true)
