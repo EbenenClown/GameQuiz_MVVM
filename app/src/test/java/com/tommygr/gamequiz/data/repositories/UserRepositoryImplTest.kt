@@ -33,10 +33,10 @@ class UserRepositoryImplTest {
 
     @Test
     fun `get user, retrieve resource success with correct user`() = runBlocking {
-        val user= UserDataModel("1", "iii@mail.com")
-        coEvery { mockLocalDataSource.getUser("1") } returns user
+        val user = UserDataModel("1", "iii@mail.com")
+        coEvery { mockLocalDataSource.getUser() } returns user
 
-        val receivedStatistic = userRepositoryImpl.getUser("1")
+        val receivedStatistic = userRepositoryImpl.getUser()
 
         assertThat(receivedStatistic).isInstanceOf(Resource.Success::class.java)
         assertThat(receivedStatistic.data).isEqualTo(user.toDomainModel())
@@ -44,9 +44,9 @@ class UserRepositoryImplTest {
 
     @Test
     fun `get user throws exception, retrieve resource error with correct message`() = runBlocking {
-        coEvery { mockLocalDataSource.getUser("1") } throws IOException()
+        coEvery { mockLocalDataSource.getUser() } throws IOException()
 
-        val receivedStatistic = userRepositoryImpl.getUser("1")
+        val receivedStatistic = userRepositoryImpl.getUser()
 
         assertThat(receivedStatistic).isInstanceOf(Resource.Error::class.java)
         assertThat(receivedStatistic.message).isEqualTo("java.io.IOException")

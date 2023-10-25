@@ -30,16 +30,16 @@ class GetUserUseCaseTest {
 
     @Test
     fun `test getting user successfully with default argument`() = runBlocking {
-        val user = UserDomainModel("1", "iii@mail.com")
-        coEvery { userRepository.getUser("1") } returns Resource.Success(user)
+        val user = UserDomainModel("1" ,"", "iii@mail.com", true)
+        coEvery { userRepository.getUser() } returns Resource.Success(user)
 
-        val result = getUserUseCase("1")
+        val result = getUserUseCase()
 
         assertThat(result).isInstanceOf(Resource.Success::class)
             .prop("User") { Resource.Success<UserDomainModel>::data.call(it) }.isEqualTo(user)
 
 
-        coVerify { userRepository.getUser("1") }
+        coVerify { userRepository.getUser() }
     }
 
     @AfterEach

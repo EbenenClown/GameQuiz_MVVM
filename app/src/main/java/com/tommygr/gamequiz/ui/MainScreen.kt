@@ -108,13 +108,6 @@ fun MainScreen(onClicked: () -> Unit) {
                 textDecoration = TextDecoration.Underline,
                 modifier = Modifier.padding(PaddingValues(start = 16.dp))
             )
-            Text(
-                text = "Register",
-                fontWeight = FontWeight.Bold,
-                fontSize = 18.sp,
-                textDecoration = TextDecoration.Underline,
-                modifier = Modifier.padding(PaddingValues(start = 16.dp))
-            )
         }
     }
 

@@ -18,10 +18,10 @@ fun StatisticDataModel.toDomainModel(): StatisticDomainModel = StatisticDomainMo
 
 fun StatisticDomainModel.toDataModel(): StatisticDataModel = StatisticDataModel(userId, gamesWon, gamesLost, perfectGames)
 
-fun UserDataModel.toDomainModel(): UserDomainModel = UserDomainModel(userId, email)
+fun UserDataModel.toDomainModel(): UserDomainModel = UserDomainModel(userId, userName, email, isRegistered)
 
 fun UserDomainModel.toDataModel(): UserDataModel = UserDataModel(userId, email)
 
-fun FirebaseUser.toDomainModel(): UserDomainModel = UserDomainModel(uid, email ?: "")
+fun FirebaseUser.toDomainModel(): UserDomainModel = UserDomainModel(uid, displayName ?: "", email ?: "", true)
 
-fun FirebaseUser.toDataModel(): UserDataModel = UserDataModel(uid, email ?: "")
+fun FirebaseUser.toDataModel(): UserDataModel = UserDataModel(uid, displayName ?: "", email ?: "", true)
