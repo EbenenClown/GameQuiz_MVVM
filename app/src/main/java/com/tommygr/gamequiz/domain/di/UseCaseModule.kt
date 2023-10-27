@@ -1,5 +1,6 @@
 package com.tommygr.gamequiz.domain.di
 
+import com.tommygr.gamequiz.domain.repositories.DataStoreRepository
 import com.tommygr.gamequiz.domain.repositories.QuizElementRepository
 import com.tommygr.gamequiz.domain.repositories.StatisticRepository
 import com.tommygr.gamequiz.domain.repositories.UserRepository
@@ -18,7 +19,7 @@ import dagger.hilt.android.components.ViewModelComponent
 object UseCaseModule {
 
     @Provides
-    fun provideCreateLocalUserUseCase(userRepository: UserRepository): CreateLocalUserUseCase = CreateLocalUserUseCase(userRepository)
+    fun provideCreateLocalUserUseCase(userRepository: UserRepository, dataStoreRepository: DataStoreRepository): CreateLocalUserUseCase = CreateLocalUserUseCase(userRepository, dataStoreRepository)
 
     @Provides
     fun provideGetSortedQuestionsUseCase(quizElementRepository: QuizElementRepository): GetSortedQuestionsUseCase = GetSortedQuestionsUseCase(quizElementRepository)

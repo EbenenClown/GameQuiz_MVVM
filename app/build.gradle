@@ -164,6 +164,8 @@ dependencies {
     //Hamcrest
     testImplementation 'org.hamcrest:hamcrest:2.2'
 
+    //DataStore
+    implementation "androidx.datastore:datastore-preferences:1.0.0"
 }
 
 kapt {

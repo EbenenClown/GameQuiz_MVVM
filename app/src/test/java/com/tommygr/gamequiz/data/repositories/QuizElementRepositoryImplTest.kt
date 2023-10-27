@@ -79,7 +79,7 @@ class QuizElementRepositoryImplTest {
         val responseHashMap: Response<HashMap<String, QuizElementDataModel>> = Response.success(elementsFirebaseResponse)
         coEvery { mockRemoteDataSource.getAllElements() } returns responseHashMap
 
-        val refreshedElements = quizElementRepositoryImpl.refreshElements()
+        val refreshedElements = quizElementRepositoryImpl.getRemoteQuizElements()
 
         //Same order doesn't matter, because they are going to be shuffled anyway
         coVerify { mockLocalDataSource.insertAll(match { it.containsAll(elements) }) }
@@ -92,7 +92,7 @@ class QuizElementRepositoryImplTest {
         val responseHashMap: Response<HashMap<String, QuizElementDataModel>> = Response.success(null)
         coEvery { mockRemoteDataSource.getAllElements() } returns responseHashMap
 
-        val refreshedElements = quizElementRepositoryImpl.refreshElements()
+        val refreshedElements = quizElementRepositoryImpl.getRemoteQuizElements()
 
         assertThat(refreshedElements).isInstanceOf(Resource.Error::class)
         assertThat(refreshedElements.message).isEqualTo("quizElementList is null")
@@ -102,7 +102,7 @@ class QuizElementRepositoryImplTest {
     fun `refresh element throws retrofit exception, receive resource error with correct message`() = runBlocking {
         coEvery { mockRemoteDataSource.getAllElements() } throws HttpException(Response.error<ResponseBody>(404 , "".toResponseBody()))
 
-        val refreshedElements = quizElementRepositoryImpl.refreshElements()
+        val refreshedElements = quizElementRepositoryImpl.getRemoteQuizElements()
 
         assertThat(refreshedElements).isInstanceOf(Resource.Error::class)
         assertThat(refreshedElements.message).isEqualTo("retrofit2.HttpException: HTTP 404 Response.error()")

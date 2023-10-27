@@ -11,7 +11,7 @@ interface QuizElementRepository {
 
     suspend fun insertAll(quizElements: List<QuizElementDomainModel>): Resource<Unit>
 
-    suspend fun refreshElements(): Resource<List<QuizElementDomainModel>>
+    suspend fun getRemoteQuizElements(): Resource<List<QuizElementDomainModel>>
 
     suspend fun updateElement(quizElement: QuizElementDataModel): Resource<Unit>
 
