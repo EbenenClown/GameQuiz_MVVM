@@ -28,12 +28,9 @@ class MainScreenViewModel @Inject constructor(
     private val createLocalUserUseCase: CreateLocalUserUseCase,
     private val syncQuizElementsUseCase: SyncQuizElementsUseCase,
     private val dataStoreRepository: DataStoreRepository,
-    private val screenState: ScreenState
 ) : ViewModel() {
     private val _uiState = MutableStateFlow<MainScreenUiState>(MainScreenUiState.IsLoading)
     val uiState = _uiState.asStateFlow()
-
-    var currentScreen: Screen by screenState::currentScreen
 
     fun getUserNameAndCheckForLoggedInStatus() {
         viewModelScope.launch {
@@ -61,7 +58,7 @@ class MainScreenViewModel @Inject constructor(
     }
 
     fun navigateToScreen() {
-        
+
     }
 
     private fun isUserLoggedIn() {

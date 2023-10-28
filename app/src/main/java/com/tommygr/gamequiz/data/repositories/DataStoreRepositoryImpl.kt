@@ -8,11 +8,12 @@ import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.tommygr.gamequiz.domain.repositories.DataStoreRepository
 import com.tommygr.gamequiz.util.Constants
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
-class DataStoreRepositoryImpl @Inject constructor(private val context: Context): DataStoreRepository {
+class DataStoreRepositoryImpl @Inject constructor(@ApplicationContext private val context: Context): DataStoreRepository {
     private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(Constants.DATASTORE_NAME)
     override suspend fun saveUserId(userId: String) {
         context.dataStore.edit {

@@ -9,7 +9,6 @@ import com.tommygr.gamequiz.R
 import com.tommygr.gamequiz.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {

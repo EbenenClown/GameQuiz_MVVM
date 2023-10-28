@@ -49,6 +49,11 @@ object NetworkModule {
     }
 
     @Provides
+    fun provideFirebaseAuth(): FirebaseAuth {
+        return FirebaseAuth.getInstance()
+    }
+
+    @Provides
     fun provideRemoteQuizElementDataSource(firebaseAPI: FirebaseAPI): RemoteQuizElementDataSource {
         return RemoteQuizElementDataSource(firebaseAPI)
     }
