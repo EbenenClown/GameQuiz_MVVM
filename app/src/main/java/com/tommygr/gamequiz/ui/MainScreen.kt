@@ -1,6 +1,7 @@
 package com.tommygr.gamequiz.ui
 
 import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.AnimationVector1D
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
@@ -36,11 +37,7 @@ import com.tommygr.gamequiz.ui.ui.composables.StandardButton
 
 @Composable
 fun MainScreen(onClicked: () -> Unit) {
-    val offsetX = remember { Animatable(-575f) }
-
-    LaunchedEffect(Unit) {
-        offsetX.animateTo(0f, animationSpec = tween(durationMillis = 1000, easing = LinearEasing))
-    }
+    val offsetX =
 
     Box(
         modifier = Modifier
@@ -57,7 +54,7 @@ fun MainScreen(onClicked: () -> Unit) {
         Canvas(
             modifier = Modifier
                 .fillMaxHeight()
-                .offset(x = offsetX.value.dp),
+                .offset(x = animatable(-1000f, -575f).value.dp),
             onDraw = { drawCircle(Color.Gray, radius = size.height) })
     }
     Column(
@@ -80,7 +77,7 @@ fun MainScreen(onClicked: () -> Unit) {
             }
 
             StandardButton(
-                "Statistik", modifier = Modifier
+                "Statistik", modifier = Modifier.offset(x = animatable(-10f, 1000f).value.dp)
                     .height(50.dp)
                     .padding(PaddingValues(end = 40.dp)), Color.DarkGray
             ) {
@@ -104,6 +101,19 @@ fun MainScreen(onClicked: () -> Unit) {
             )
         }
     }
+}
+
+@Composable
+private fun animatable(initialValue: Float, endValue: Float): Animatable<Float, AnimationVector1D> {
+    val offsetX = remember { Animatable(-1000f) }
+
+    LaunchedEffect(Unit) {
+        offsetX.animateTo(
+            -575f,
+            animationSpec = tween(durationMillis = 1000, easing = LinearEasing)
+        )
+    }
+    return offsetX
 }
 
 @Preview(showBackground = true, showSystemUi = true)
