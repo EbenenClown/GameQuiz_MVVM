@@ -1,9 +1,16 @@
 package com.tommygr.gamequiz.ui
 
+import android.content.res.Configuration
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.AnimationVector1D
 import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.MutableTransitionState
+import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
+import androidx.compose.animation.slideInHorizontally
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -13,17 +20,26 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.paint
 import androidx.compose.ui.graphics.Brush
 
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 
@@ -33,72 +49,80 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.tommygr.gamequiz.R
 import com.tommygr.gamequiz.ui.ui.composables.StandardButton
+import kotlinx.coroutines.delay
 
 
 @Composable
 fun MainScreen(onClicked: () -> Unit) {
-    val offsetX =
+    val state = remember {
+        MutableTransitionState(false).apply {
+            targetState = true
+        }
+    }
+
+    val configuration = LocalConfiguration.current
+    val screenHeight = configuration.screenHeightDp
+    val screenWidth = configuration.screenWidthDp
 
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(
-                brush = Brush.horizontalGradient(
-                    colors = listOf(
-                        Color(255, 231, 135, 255),
-                        Color(255, 130, 53)
-                    )
-                )
-            )
-    ) {
-        Canvas(
+            .background(Color(0xFF4c5a77))
+    )
+
+    Column(modifier = Modifier.fillMaxSize().padding(bottom = 100.dp), verticalArrangement = Arrangement.SpaceEvenly) {
+
+        Image(
+            painter = painterResource(id = R.drawable.logo_full_upscaled),
+            contentDescription = null,
+            contentScale = ContentScale.FillBounds,
             modifier = Modifier
-                .fillMaxHeight()
-                .offset(x = animatable(-1000f, -575f).value.dp),
-            onDraw = { drawCircle(Color.Gray, radius = size.height) })
-    }
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            , verticalArrangement = Arrangement.spacedBy(150.dp)
-    ) {
-        Box() {
-            Image(
-                modifier = Modifier.padding(top = 50.dp),
-                painter = painterResource(id = R.drawable.gamequiz_string),
-                contentDescription = "Icon"
+                .height((screenWidth / 1.5).dp)
+                .width((screenWidth / 1.5).dp)
+                .offset(x = ((screenWidth / 2) - (screenWidth / 1.5) / 2).dp)
+        )
+
+        AnimatedVisibility(
+            visibleState = state,
+            enter = slideInHorizontally(
+                animationSpec = tween(
+                    durationMillis = 1500,
+                    delayMillis = 1250
+                ),
+                initialOffsetX = {
+                    -screenWidth * 3
+                }
             )
-        }
+        ) {
+            Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
+                StandardButton("Spielen") {
 
-        Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
+                }
 
-            StandardButton("Spielen") {
+                StandardButton(
+                    "Statistik", modifier = Modifier
+                        .height(50.dp)
+                        .padding(PaddingValues(end = 40.dp)), Color.DarkGray
+                ) {
 
+                }
+
+                StandardButton(
+                    "Einstellungen", modifier = Modifier
+                        .height(50.dp)
+                        .padding(PaddingValues(end = 40.dp)), Color.DarkGray
+                ) {
+
+                }
+
+                Text(
+                    text = "Login",
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 18.sp,
+                    textDecoration = TextDecoration.Underline,
+                    modifier = Modifier.padding(PaddingValues(start = 16.dp))
+                )
             }
-
-            StandardButton(
-                "Statistik", modifier = Modifier.offset(x = animatable(-10f, 1000f).value.dp)
-                    .height(50.dp)
-                    .padding(PaddingValues(end = 40.dp)), Color.DarkGray
-            ) {
-
-            }
-
-            StandardButton(
-                "Einstellungen", modifier = Modifier
-                    .height(50.dp)
-                    .padding(PaddingValues(end = 40.dp)), Color.DarkGray
-            ) {
-
-            }
-
-            Text(
-                text = "Login",
-                fontWeight = FontWeight.Bold,
-                fontSize = 18.sp,
-                textDecoration = TextDecoration.Underline,
-                modifier = Modifier.padding(PaddingValues(start = 16.dp))
-            )
         }
     }
 }
@@ -110,7 +134,7 @@ private fun animatable(initialValue: Float, endValue: Float): Animatable<Float, 
     LaunchedEffect(Unit) {
         offsetX.animateTo(
             -575f,
-            animationSpec = tween(durationMillis = 1000, easing = LinearEasing)
+            animationSpec = tween(durationMillis = 1500, easing = LinearEasing)
         )
     }
     return offsetX
