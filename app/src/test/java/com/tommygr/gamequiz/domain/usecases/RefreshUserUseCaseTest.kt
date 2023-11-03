@@ -17,19 +17,19 @@ import org.junit.jupiter.api.Test
 
 class RefreshUserUseCaseTest {
     @RelaxedMockK
-    private lateinit var userRepository: UserRepository
+    private lateinit var mockUserRepository: UserRepository
     private lateinit var refreshUserUseCase: RefreshUserUseCase
 
     @BeforeEach
     fun setUp() {
         MockKAnnotations.init(this)
-        refreshUserUseCase = RefreshUserUseCase(userRepository)
+        refreshUserUseCase = RefreshUserUseCase(mockUserRepository)
     }
 
     @Test
     fun `test refreshing user successfully with default argument`() = runBlocking {
         val user = UserDomainModel("1" ,"", "iii@mail.com", true)
-        coEvery { userRepository.refreshUser("1") } returns Resource.Success(user)
+        coEvery { mockUserRepository.refreshUser("1") } returns Resource.Success(user)
 
         val result = refreshUserUseCase("1")
 
@@ -39,6 +39,6 @@ class RefreshUserUseCaseTest {
 
     @AfterEach
     fun tearDown() {
-        clearMocks(userRepository)
+        clearMocks(mockUserRepository)
     }
 }

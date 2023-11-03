@@ -1,4 +1,4 @@
-package com.tommygr.gamequiz.domain
+package com.tommygr.gamequiz.util.dataGenerators
 
 import com.tommygr.gamequiz.domain.domainmodels.QuizElementDomainModel
 import kotlin.random.Random

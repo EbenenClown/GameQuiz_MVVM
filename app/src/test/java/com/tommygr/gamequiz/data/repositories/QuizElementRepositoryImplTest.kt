@@ -4,7 +4,7 @@ import assertk.assertThat
 import assertk.assertions.isEqualTo
 import assertk.assertions.isInstanceOf
 import assertk.assertions.isTrue
-import com.tommygr.gamequiz.data.local.quizElementDataModel
+import com.tommygr.gamequiz.util.dataGenerators.quizElementDataModel
 import com.tommygr.gamequiz.data.source.datamodels.QuizElementDataModel
 import com.tommygr.gamequiz.data.source.datamodels.mapper.toDomainModel
 import com.tommygr.gamequiz.data.source.local.daos.QuizElementDao
@@ -41,9 +41,21 @@ class QuizElementRepositoryImplTest {
     @Test
     fun `get All Elements, receive resource success with correct list`() = runBlocking {
         val elements = listOf(
-            quizElementDataModel(id = "1", isSolved = false, wasShown = false),
-            quizElementDataModel(id = "2", isSolved = false, wasShown = true),
-            quizElementDataModel(id = "3", isSolved = true, wasShown = true)
+            quizElementDataModel(
+                id = "1",
+                isSolved = false,
+                wasShown = false
+            ),
+            quizElementDataModel(
+                id = "2",
+                isSolved = false,
+                wasShown = true
+            ),
+            quizElementDataModel(
+                id = "3",
+                isSolved = true,
+                wasShown = true
+            )
         )
         val expectedList = elements.toDomainModel()
 
@@ -67,14 +79,38 @@ class QuizElementRepositoryImplTest {
     @Test
     fun `refresh elements, receive resource success with correct list`() = runBlocking {
         val elementsFirebaseResponse = hashMapOf(
-            "firebaseId1" to quizElementDataModel(id = "1", isSolved = false, wasShown = false),
-            "firebaseId2" to quizElementDataModel(id = "2", isSolved = false, wasShown = true),
-            "firebaseId3" to quizElementDataModel(id = "3", isSolved = true, wasShown = true)
+            "firebaseId1" to com.tommygr.gamequiz.util.dataGenerators.quizElementDataModel(
+                id = "1",
+                isSolved = false,
+                wasShown = false
+            ),
+            "firebaseId2" to com.tommygr.gamequiz.util.dataGenerators.quizElementDataModel(
+                id = "2",
+                isSolved = false,
+                wasShown = true
+            ),
+            "firebaseId3" to com.tommygr.gamequiz.util.dataGenerators.quizElementDataModel(
+                id = "3",
+                isSolved = true,
+                wasShown = true
+            )
         )
         val elements = listOf(
-            quizElementDataModel(id = "1", isSolved = false, wasShown = false),
-            quizElementDataModel(id = "2", isSolved = false, wasShown = true),
-            quizElementDataModel(id = "3", isSolved = true, wasShown = true)
+            com.tommygr.gamequiz.util.dataGenerators.quizElementDataModel(
+                id = "1",
+                isSolved = false,
+                wasShown = false
+            ),
+            com.tommygr.gamequiz.util.dataGenerators.quizElementDataModel(
+                id = "2",
+                isSolved = false,
+                wasShown = true
+            ),
+            com.tommygr.gamequiz.util.dataGenerators.quizElementDataModel(
+                id = "3",
+                isSolved = true,
+                wasShown = true
+            )
         )
         val responseHashMap: Response<HashMap<String, QuizElementDataModel>> = Response.success(elementsFirebaseResponse)
         coEvery { mockRemoteDataSource.getAllElements() } returns responseHashMap
@@ -110,7 +146,7 @@ class QuizElementRepositoryImplTest {
 
     @Test
     fun `update Element, get resource Success`() = runBlocking {
-        val quizElement = quizElementDataModel("1")
+        val quizElement = com.tommygr.gamequiz.util.dataGenerators.quizElementDataModel("1")
         coEvery { mockLocalDataSource.updateQuizElement(quizElement) } returns Unit
 
         val response = quizElementRepositoryImpl.updateElement(quizElement)
@@ -121,7 +157,7 @@ class QuizElementRepositoryImplTest {
 
     @Test
     fun `update Element throws exception, get resource Error`() = runBlocking {
-        val quizElement = quizElementDataModel("1")
+        val quizElement = com.tommygr.gamequiz.util.dataGenerators.quizElementDataModel("1")
         coEvery { mockLocalDataSource.updateQuizElement(quizElement) } throws IOException()
 
         val response = quizElementRepositoryImpl.updateElement(quizElement)

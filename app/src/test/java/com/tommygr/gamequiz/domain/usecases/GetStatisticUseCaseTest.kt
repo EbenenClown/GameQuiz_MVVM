@@ -18,30 +18,30 @@ import org.junit.jupiter.api.Test
 
 class GetStatisticUseCaseTest {
     @MockK
-    lateinit var statisticRepository: StatisticRepository
+    lateinit var mockStatisticRepository: StatisticRepository
     lateinit var getStatisticUseCase: GetStatisticUseCase
 
     @BeforeEach
     fun setUp() {
         MockKAnnotations.init(this)
-        getStatisticUseCase = GetStatisticUseCase(statisticRepository)
+        getStatisticUseCase = GetStatisticUseCase(mockStatisticRepository)
     }
 
     @Test
     fun `test getting statistic successfully`() = runBlocking {
         val statisticDomainModel = StatisticDomainModel("1", 1, 1, 1)
-        coEvery { statisticRepository.getStatistic("1") } returns Resource.Success(statisticDomainModel)
+        coEvery { mockStatisticRepository.getStatistic("1") } returns Resource.Success(statisticDomainModel)
 
         val result = getStatisticUseCase("1",)
 
         assertThat(result).isInstanceOf(Resource.Success::class.java)
         assertThat(result.data).isEqualTo(statisticDomainModel)
 
-        coVerify { statisticRepository.getStatistic("1") }
+        coVerify { mockStatisticRepository.getStatistic("1") }
     }
 
     @AfterEach
     fun tearDown() {
-        clearMocks(statisticRepository)
+        clearMocks(mockStatisticRepository)
     }
 }

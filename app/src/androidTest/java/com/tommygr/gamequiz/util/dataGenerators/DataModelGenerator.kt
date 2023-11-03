@@ -1,4 +1,4 @@
-package com.tommygr.gamequiz.data.local
+package com.tommygr.gamequiz.util.dataGenerators
 
 import com.tommygr.gamequiz.data.source.datamodels.QuizElementDataModel
 

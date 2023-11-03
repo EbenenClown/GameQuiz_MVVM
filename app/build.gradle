@@ -75,15 +75,6 @@ android {
             useJUnitPlatform()
         }
     }
-    android.sourceSets {
-        test {
-            java.srcDirs += "$projectDir/src/testShared"
-        }
-
-        androidTest {
-            java.srcDirs += "$projectDir/src/testShared"
-        }
-    }
 }
 
 allprojects {

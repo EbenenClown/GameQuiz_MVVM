@@ -3,7 +3,6 @@ package com.tommygr.gamequiz.domain.usecases
 import assertk.assertThat
 import assertk.assertions.hasSize
 import assertk.assertions.isEqualTo
-import com.tommygr.gamequiz.domain.getQuizDomainModelListWith150Entries
 import com.tommygr.gamequiz.domain.repositories.QuizElementRepository
 import com.tommygr.gamequiz.util.GameSize
 import com.tommygr.gamequiz.util.Resource
@@ -21,20 +20,21 @@ import org.junit.jupiter.params.provider.EnumSource
 
 class GetSortedQuestionsUseCaseTest {
     @RelaxedMockK
-    private lateinit var quizElementRepository: QuizElementRepository
+    private lateinit var mockQuizElementRepository: QuizElementRepository
     private lateinit var getSortedQuestionsUseCase: GetSortedQuestionsUseCase
 
     @BeforeEach
     fun setUp() {
         MockKAnnotations.init(this)
-        getSortedQuestionsUseCase = GetSortedQuestionsUseCase(quizElementRepository)
+        getSortedQuestionsUseCase = GetSortedQuestionsUseCase(mockQuizElementRepository)
     }
 
     @ParameterizedTest
     @EnumSource(GameSize::class)
     fun `invoke list, return sortedList with gamesize`(gameSize: GameSize) = runBlocking {
-        val expectedList = getQuizDomainModelListWith150Entries()
-        coEvery { quizElementRepository.getAllElements() } returns Resource.Success(expectedList)
+        val expectedList =
+            com.tommygr.gamequiz.util.dataGenerators.getQuizDomainModelListWith150Entries()
+        coEvery { mockQuizElementRepository.getAllElements() } returns Resource.Success(expectedList)
 
         val fetchedList = getSortedQuestionsUseCase(gameSize.value).data!!
 
@@ -43,7 +43,7 @@ class GetSortedQuestionsUseCaseTest {
 
     @Test
     fun `invoke empty list, return error resource with expected message`() = runBlocking() {
-        coEvery { quizElementRepository.getAllElements() } returns Resource.Success(emptyList())
+        coEvery { mockQuizElementRepository.getAllElements() } returns Resource.Success(emptyList())
         val expectedMessage = "elements are empty or null"
 
         val fetchedResource = getSortedQuestionsUseCase(GameSize.MAX.value)
@@ -53,7 +53,7 @@ class GetSortedQuestionsUseCaseTest {
 
     @AfterEach
     fun tearDown() {
-        clearMocks(quizElementRepository)
+        clearMocks(mockQuizElementRepository)
     }
 
 }
