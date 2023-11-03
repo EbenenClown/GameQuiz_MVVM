@@ -24,6 +24,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -32,6 +33,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.paint
@@ -67,34 +69,46 @@ fun MainScreen(onClicked: () -> Unit) {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0xFF4c5a77))
+            .background(Color(0xFFD5663B))
     )
 
-    Column(modifier = Modifier.fillMaxSize().padding(bottom = 100.dp), verticalArrangement = Arrangement.SpaceEvenly) {
+    Column(modifier = Modifier
+        .fillMaxSize()
+        .padding(bottom = 100.dp), verticalArrangement = Arrangement.SpaceEvenly) {
 
-        Image(
-            painter = painterResource(id = R.drawable.logo_full_upscaled),
-            contentDescription = null,
-            contentScale = ContentScale.FillBounds,
-            modifier = Modifier
-                .height((screenWidth / 1.5).dp)
-                .width((screenWidth / 1.5).dp)
-                .offset(x = ((screenWidth / 2) - (screenWidth / 1.5) / 2).dp)
+        Box(modifier = Modifier
+            .fillMaxWidth()
+            .height(screenWidth.dp)
+            .background(brush = Brush.radialGradient( colors = listOf(Color(0xFFFFFFFF), Color(
+                0xFFD5663B
+            )
+            )))
         )
+
+        {
+            Image(
+                painter = painterResource(id = R.drawable.logo_full_upscaled),
+                contentDescription = null,
+                contentScale = ContentScale.FillBounds,
+                modifier = Modifier
+                    .height((screenWidth / 1.5).dp)
+                    .width((screenWidth / 1.5).dp)
+                    .align(Alignment.Center)
+            )
+        }
 
         AnimatedVisibility(
             visibleState = state,
             enter = slideInHorizontally(
                 animationSpec = tween(
-                    durationMillis = 1500,
-                    delayMillis = 1250
+                    durationMillis = 1500
                 ),
                 initialOffsetX = {
                     -screenWidth * 3
                 }
             )
         ) {
-            Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
+            Column(verticalArrangement = Arrangement.spacedBy(15.dp)) {
                 StandardButton("Spielen") {
 
                 }
@@ -102,7 +116,7 @@ fun MainScreen(onClicked: () -> Unit) {
                 StandardButton(
                     "Statistik", modifier = Modifier
                         .height(50.dp)
-                        .padding(PaddingValues(end = 40.dp)), Color.DarkGray
+                        .padding(PaddingValues(end = 40.dp))
                 ) {
 
                 }
@@ -110,13 +124,13 @@ fun MainScreen(onClicked: () -> Unit) {
                 StandardButton(
                     "Einstellungen", modifier = Modifier
                         .height(50.dp)
-                        .padding(PaddingValues(end = 40.dp)), Color.DarkGray
+                        .padding(PaddingValues(end = 40.dp))
                 ) {
 
                 }
 
                 Text(
-                    text = "Login",
+                    text = "",
                     fontWeight = FontWeight.Bold,
                     fontSize = 18.sp,
                     textDecoration = TextDecoration.Underline,

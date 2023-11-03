@@ -23,7 +23,7 @@ fun StandardButton(
     text: String,
     modifier: Modifier = Modifier,
     backgroundColor: Color = Color.Black,
-    onClicked: () -> Unit
+    onClicked: () -> Unit = {}
 ) {
     OutlinedButton(
         modifier = modifier
