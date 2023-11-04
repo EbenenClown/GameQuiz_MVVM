@@ -6,7 +6,7 @@ import com.tommygr.gamequiz.util.Resource
 
 interface UserRepository {
 
-    suspend fun getUser(userId: String, forceUpdate: Boolean = false): Resource<UserDomainModel>
+    suspend fun getUser(forceUpdate: Boolean = false): Resource<UserDomainModel>
 
     suspend fun refreshUser(id: String): Resource<UserDomainModel>
 
@@ -18,4 +18,5 @@ interface UserRepository {
 
     suspend fun updateUser(userDomainModel: UserDomainModel)
 
+    suspend fun clear()
 }

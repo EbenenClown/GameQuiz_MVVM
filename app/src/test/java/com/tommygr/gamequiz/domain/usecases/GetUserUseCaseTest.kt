@@ -19,31 +19,31 @@ import org.junit.jupiter.api.Test
 
 class GetUserUseCaseTest {
     @MockK
-    private lateinit var userRepository: UserRepository
+    private lateinit var mockUserRepository: UserRepository
     private lateinit var getUserUseCase: GetUserUseCase
 
     @BeforeEach
     fun setUp() {
         MockKAnnotations.init(this)
-        getUserUseCase = GetUserUseCase(userRepository)
+        getUserUseCase = GetUserUseCase(mockUserRepository)
     }
 
     @Test
     fun `test getting user successfully with default argument`() = runBlocking {
-        val user = UserDomainModel("1", "iii@mail.com")
-        coEvery { userRepository.getUser("1") } returns Resource.Success(user)
+        val user = UserDomainModel("1" ,"", "iii@mail.com", true)
+        coEvery { mockUserRepository.getUser() } returns Resource.Success(user)
 
-        val result = getUserUseCase("1")
+        val result = getUserUseCase()
 
         assertThat(result).isInstanceOf(Resource.Success::class)
             .prop("User") { Resource.Success<UserDomainModel>::data.call(it) }.isEqualTo(user)
 
 
-        coVerify { userRepository.getUser("1") }
+        coVerify { mockUserRepository.getUser() }
     }
 
     @AfterEach
     fun tearDown() {
-        clearMocks(userRepository)
+        clearMocks(mockUserRepository)
     }
 }

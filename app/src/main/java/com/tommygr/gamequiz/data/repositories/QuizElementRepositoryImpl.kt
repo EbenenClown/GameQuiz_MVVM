@@ -1,6 +1,5 @@
 package com.tommygr.gamequiz.data.repositories
 
-import android.util.Log
 import com.tommygr.gamequiz.data.source.datamodels.QuizElementDataModel
 import com.tommygr.gamequiz.data.source.datamodels.mapper.toDataModel
 import com.tommygr.gamequiz.domain.repositories.QuizElementRepository
@@ -9,9 +8,7 @@ import com.tommygr.gamequiz.domain.domainmodels.QuizElementDomainModel
 import com.tommygr.gamequiz.data.source.datamodels.mapper.toDomainModel
 import com.tommygr.gamequiz.data.source.local.daos.QuizElementDao
 import com.tommygr.gamequiz.util.Resource
-import kotlinx.coroutines.flow.map
 import javax.inject.Inject
-import kotlin.math.log
 
 class QuizElementRepositoryImpl @Inject constructor(private val localDataSource: QuizElementDao
                                 , private val remoteDataSource: RemoteQuizElementDataSource):
@@ -30,12 +27,11 @@ class QuizElementRepositoryImpl @Inject constructor(private val localDataSource:
         }
     }
 
-    override suspend fun refreshElements(): Resource<List<QuizElementDomainModel>> {
+    override suspend fun getRemoteQuizElements(): Resource<List<QuizElementDomainModel>> {
         return try {
             val elementBody = remoteDataSource.getAllElements().body()
             elementBody?.values?.let { mutableList ->
                 val immutableList = mutableList.toList()
-                localDataSource.insertAll(immutableList)
                 Resource.Success(immutableList.map { it.toDomainModel() })
             } ?: Resource.Error("quizElementList is null")
         } catch (e: Exception) {

@@ -13,9 +13,9 @@ import kotlin.Exception
 
 class UserRepositoryImpl @Inject constructor(private val localUserDataSource: UserDao, private val remoteUserDataSource: RemoteUserDataSource): UserRepository {
 
-    override suspend fun getUser(userId: String, forceUpdate: Boolean): Resource<UserDomainModel> {
+    override suspend fun getUser(forceUpdate: Boolean): Resource<UserDomainModel> {
         return try {
-            Resource.Success(localUserDataSource.getUser(userId).toDomainModel())
+            Resource.Success(localUserDataSource.getUser().toDomainModel())
         } catch (e: Exception) {
             Resource.Error(e.toString())
         }
@@ -25,6 +25,7 @@ class UserRepositoryImpl @Inject constructor(private val localUserDataSource: Us
         return try {
             val remoteFirebaseUser = remoteUserDataSource.getUser()
             remoteFirebaseUser?.let {
+                localUserDataSource.clear()
                 localUserDataSource.addUser(it.toDataModel())
                 Resource.Success(it.toDomainModel())
             }
@@ -61,4 +62,7 @@ class UserRepositoryImpl @Inject constructor(private val localUserDataSource: Us
         localUserDataSource.updateUser(userDomainModel.toDataModel())
     }
 
+    override suspend fun clear() {
+        localUserDataSource.clear()
+    }
 }
