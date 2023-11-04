@@ -9,6 +9,7 @@ import com.tommygr.gamequiz.domain.usecases.RefreshUserUseCase
 import com.tommygr.gamequiz.domain.usecases.SyncQuizElementsUseCase
 import com.tommygr.gamequiz.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -16,7 +17,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 sealed class MainScreenUiState {
-    object IsLoading: MainScreenUiState()
+    data object IsLoading: MainScreenUiState()
     data class Success(val userName: String, val isLoggedIn: Boolean, val errorMessage: String?): MainScreenUiState()
     data class Failure(val errorMessage: String?): MainScreenUiState()
 }
@@ -33,7 +34,7 @@ class MainScreenViewModel @Inject constructor(
     val uiState = _uiState.asStateFlow()
 
     fun getUserNameAndCheckForLoggedInStatus() {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             val userResource = getUserUseCase()
             //When Resource is success there is data, it's checked in the repository -> !! is safe
             if (userResource is Resource.Success && userResource.data!!.userId.isNotEmpty()) {
@@ -52,7 +53,7 @@ class MainScreenViewModel @Inject constructor(
     }
 
     fun syncQuizElements() {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             syncQuizElementsUseCase()
         }
     }
@@ -62,7 +63,7 @@ class MainScreenViewModel @Inject constructor(
     }
 
     private fun isUserLoggedIn() {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             dataStoreRepository.getUserId().collect {
                 if (it.isNotEmpty()) {
                     when (val resource = refreshUserUseCase(it)){
