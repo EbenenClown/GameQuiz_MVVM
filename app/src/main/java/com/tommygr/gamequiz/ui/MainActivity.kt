@@ -4,13 +4,16 @@ import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.NavController
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.fragment.NavHostFragment
-import com.tommygr.gamequiz.R
-import com.tommygr.gamequiz.databinding.ActivityMainBinding
+import com.tommygr.gamequiz.ui.screens.GameOptionsScreen
+import com.tommygr.gamequiz.ui.screens.MainScreen
 import com.tommygr.gamequiz.ui.ui.viewmodels.MainScreenViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -25,9 +28,24 @@ class MainActivity : AppCompatActivity() {
 
         setContent {
             val navController = rememberNavController()
-            NavHost(navController = navController, startDestination = "home" ) {
+            NavHost(
+                navController = navController, startDestination = "home",
+                modifier = Modifier
+                    .fillMaxSize(),
+                enterTransition = { EnterTransition.None },
+                exitTransition = { ExitTransition.None },
+                popEnterTransition = { EnterTransition.None },
+                popExitTransition = { ExitTransition.None },
+            ) {
                 composable("home") {
                     MainScreen(navController = navController, mainScreenViewModel = mainViewModel)
+
+                }
+
+                navigation(startDestination = "startGame", route = "game") {
+                    composable("startGame") {
+                        GameOptionsScreen(navController = navController)
+                    }
                 }
             }
         }
