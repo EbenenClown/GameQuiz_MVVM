@@ -30,7 +30,7 @@ class GetUserUseCaseTest {
 
     @Test
     fun `test getting user successfully with default argument`() = runBlocking {
-        val user = UserDomainModel("1" ,"", "iii@mail.com", true)
+        val user = UserDomainModel("1", "", "iii@mail.com", true)
         coEvery { mockUserRepository.getUser() } returns Resource.Success(user)
 
         val result = getUserUseCase()

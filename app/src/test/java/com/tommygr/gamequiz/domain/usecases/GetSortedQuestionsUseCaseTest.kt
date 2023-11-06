@@ -31,25 +31,30 @@ class GetSortedQuestionsUseCaseTest {
 
     @ParameterizedTest
     @EnumSource(GameSize::class)
-    fun `invoke list, return sortedList with gamesize`(gameSize: GameSize) = runBlocking {
-        val expectedList =
-            com.tommygr.gamequiz.util.dataGenerators.getQuizDomainModelListWith150Entries()
-        coEvery { mockQuizElementRepository.getAllElements() } returns Resource.Success(expectedList)
+    fun `sort list with gamesize enumsource, return sortedList with gamesize`(gameSize: GameSize) =
+        runBlocking {
+            val expectedList =
+                com.tommygr.gamequiz.util.dataGenerators.getQuizDomainModelListWith150Entries()
+            coEvery { mockQuizElementRepository.getAllElements() } returns Resource.Success(
+                expectedList
+            )
 
-        val fetchedList = getSortedQuestionsUseCase(gameSize.value).data!!
+            val fetchedList = getSortedQuestionsUseCase(gameSize.value).data!!
 
-        assertThat(fetchedList).hasSize(if (gameSize == GameSize.MAX) expectedList.size else gameSize.value)
-    }
+            assertThat(fetchedList).hasSize(if (gameSize == GameSize.MAX) expectedList.size else gameSize.value)
+        }
 
-    @Test
-    fun `invoke empty list, return error resource with expected message`() = runBlocking() {
-        coEvery { mockQuizElementRepository.getAllElements() } returns Resource.Success(emptyList())
-        val expectedMessage = "elements are empty or null"
+    @ParameterizedTest
+    @EnumSource(GameSize::class)
+    fun `sort list returns error, error resource with expected message`(gameSize: GameSize) =
+        runBlocking() {
+            coEvery { mockQuizElementRepository.getAllElements() } returns Resource.Error("elements are empty or null")
+            val expectedMessage = "elements are empty or null"
 
-        val fetchedResource = getSortedQuestionsUseCase(GameSize.MAX.value)
+            val fetchedResource = getSortedQuestionsUseCase(gameSize.value)
 
-        assertThat(fetchedResource.message).isEqualTo(expectedMessage)
-    }
+            assertThat(fetchedResource.message).isEqualTo(expectedMessage)
+        }
 
     @AfterEach
     fun tearDown() {

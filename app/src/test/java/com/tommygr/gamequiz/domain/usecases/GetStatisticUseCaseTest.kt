@@ -30,9 +30,11 @@ class GetStatisticUseCaseTest {
     @Test
     fun `test getting statistic successfully`() = runBlocking {
         val statisticDomainModel = StatisticDomainModel("1", 1, 1, 1)
-        coEvery { mockStatisticRepository.getStatistic("1") } returns Resource.Success(statisticDomainModel)
+        coEvery { mockStatisticRepository.getStatistic("1") } returns Resource.Success(
+            statisticDomainModel
+        )
 
-        val result = getStatisticUseCase("1",)
+        val result = getStatisticUseCase("1")
 
         assertThat(result).isInstanceOf(Resource.Success::class.java)
         assertThat(result.data).isEqualTo(statisticDomainModel)

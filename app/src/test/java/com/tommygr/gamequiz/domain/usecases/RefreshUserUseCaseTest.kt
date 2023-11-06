@@ -28,7 +28,7 @@ class RefreshUserUseCaseTest {
 
     @Test
     fun `test refreshing user successfully with default argument`() = runBlocking {
-        val user = UserDomainModel("1" ,"", "iii@mail.com", true)
+        val user = UserDomainModel("1", "", "iii@mail.com", true)
         coEvery { mockUserRepository.refreshUser("1") } returns Resource.Success(user)
 
         val result = refreshUserUseCase("1")

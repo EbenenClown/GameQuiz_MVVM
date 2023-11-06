@@ -24,30 +24,31 @@ class ResetQuizElementsUseCaseTest {
     }
 
     @Test
-    fun `reset list with random wasShown and isSolved values, expect all wasShown and isSolved are false` () = runBlocking {
-        val generatedList = listOf(
-            com.tommygr.gamequiz.util.dataGenerators.quizElementDomainModel(
-                "1",
-                isSolved = true,
-                wasShown = true
-            ),
-            com.tommygr.gamequiz.util.dataGenerators.quizElementDomainModel(
-                "2",
-                isSolved = true,
-                wasShown = false
-            ),
-            com.tommygr.gamequiz.util.dataGenerators.quizElementDomainModel(
-                "3",
-                isSolved = false,
-                wasShown = true
+    fun `reset list with random wasShown and isSolved values, expect all wasShown and isSolved are false`() =
+        runBlocking {
+            val generatedList = listOf(
+                com.tommygr.gamequiz.util.dataGenerators.quizElementDomainModel(
+                    "1",
+                    isSolved = true,
+                    wasShown = true
+                ),
+                com.tommygr.gamequiz.util.dataGenerators.quizElementDomainModel(
+                    "2",
+                    isSolved = true,
+                    wasShown = false
+                ),
+                com.tommygr.gamequiz.util.dataGenerators.quizElementDomainModel(
+                    "3",
+                    isSolved = false,
+                    wasShown = true
+                )
             )
-        )
-        coEvery { mockQuizElementRepository.getAllElements().data } returns generatedList
+            coEvery { mockQuizElementRepository.getAllElements().data } returns generatedList
 
-        resetQuizElementsUseCase()
+            resetQuizElementsUseCase()
 
-        coVerify { mockQuizElementRepository.insertAll(match { it.all { element -> !element.isSolved && !element.wasShown } }) }
-    }
+            coVerify { mockQuizElementRepository.insertAll(match { it.all { element -> !element.isSolved && !element.wasShown } }) }
+        }
 
     @Test
     fun `give empty list, expect list won't be saved`() = runBlocking {
@@ -55,7 +56,7 @@ class ResetQuizElementsUseCaseTest {
 
         resetQuizElementsUseCase()
 
-        coVerify (exactly = 0) { mockQuizElementRepository.insertAll(any()) }
+        coVerify(exactly = 0) { mockQuizElementRepository.insertAll(any()) }
     }
 
     @AfterEach

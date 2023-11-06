@@ -15,14 +15,17 @@ class SyncQuizElementsUseCase @Inject constructor(private val quizElementReposit
             val retrievedLocalData = localDataResult.data
 
             if (!retrievedRemoteData.isNullOrEmpty() && !retrievedLocalData.isNullOrEmpty()) {
+                if(retrievedLocalData.containsAll(retrievedRemoteData)) return Resource.Success(retrievedLocalData)
+
                 val localElementsById = retrievedLocalData.associateBy { it.id }
                 val updatedLocalData = retrievedRemoteData.map { remoteElement ->
                     localElementsById[remoteElement.id]?.takeIf { it.wasShown } ?: remoteElement
                 }
+                quizElementRepository.clear()
                 quizElementRepository.insertAll(updatedLocalData)
                 return Resource.Success(updatedLocalData)
             }
         }
-        return Resource.Error("Data is null")
+        return Resource.Error("Couldn't sync quizelements")
     }
 }
