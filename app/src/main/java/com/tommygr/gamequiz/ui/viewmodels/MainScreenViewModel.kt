@@ -1,4 +1,4 @@
-package com.tommygr.gamequiz.ui.ui.viewmodels
+package com.tommygr.gamequiz.ui.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -56,10 +56,6 @@ class MainScreenViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             syncQuizElementsUseCase()
         }
-    }
-
-    fun navigateToScreen() {
-
     }
 
     private fun isUserLoggedIn() {

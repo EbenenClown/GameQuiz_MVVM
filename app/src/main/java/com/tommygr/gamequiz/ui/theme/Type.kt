@@ -1,4 +1,4 @@
-package com.tommygr.gamequiz.ui.ui.theme
+package com.tommygr.gamequiz.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

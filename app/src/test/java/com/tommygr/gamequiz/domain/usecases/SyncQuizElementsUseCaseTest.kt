@@ -43,7 +43,7 @@ class SyncQuizElementsUseCaseTest {
         coEvery { mockQuizRepository.getAllElements() } returns Resource.Success(fakeLocalDataList)
 
         val retrievedResponse = syncQuizElementsUseCase()
-        
+
         assertThat(retrievedResponse).isInstanceOf(Resource.Success::class)
         assertThat(retrievedResponse.data).isEqualTo(fakeLocalDataList)
     }

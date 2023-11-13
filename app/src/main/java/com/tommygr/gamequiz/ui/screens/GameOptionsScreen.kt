@@ -34,7 +34,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.tommygr.gamequiz.R
-import com.tommygr.gamequiz.ui.ui.composables.StandardButton
+import com.tommygr.gamequiz.ui.composables.StandardButton
 
 @Composable
 fun GameOptionsScreen(navController: NavController) {

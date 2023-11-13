@@ -14,7 +14,7 @@ import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import com.tommygr.gamequiz.ui.screens.GameOptionsScreen
 import com.tommygr.gamequiz.ui.screens.MainScreen
-import com.tommygr.gamequiz.ui.ui.viewmodels.MainScreenViewModel
+import com.tommygr.gamequiz.ui.viewmodels.MainScreenViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
