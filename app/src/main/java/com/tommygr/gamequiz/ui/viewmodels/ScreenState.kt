@@ -1,4 +1,4 @@
-package com.tommygr.gamequiz.ui.ui.viewmodels
+package com.tommygr.gamequiz.ui.viewmodels
 
 interface ScreenState {
     var currentScreen: Screen

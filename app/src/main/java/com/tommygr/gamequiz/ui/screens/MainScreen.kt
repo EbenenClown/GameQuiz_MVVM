@@ -43,9 +43,9 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import com.tommygr.gamequiz.R
-import com.tommygr.gamequiz.ui.ui.composables.StandardButton
-import com.tommygr.gamequiz.ui.ui.viewmodels.MainScreenUiState
-import com.tommygr.gamequiz.ui.ui.viewmodels.MainScreenViewModel
+import com.tommygr.gamequiz.ui.composables.StandardButton
+import com.tommygr.gamequiz.ui.viewmodels.MainScreenUiState
+import com.tommygr.gamequiz.ui.viewmodels.MainScreenViewModel
 
 
 @Composable

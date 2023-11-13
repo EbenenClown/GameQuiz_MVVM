@@ -1,4 +1,4 @@
-package com.tommygr.gamequiz.ui.ui.theme
+package com.tommygr.gamequiz.ui.theme
 
 import android.app.Activity
 import android.os.Build

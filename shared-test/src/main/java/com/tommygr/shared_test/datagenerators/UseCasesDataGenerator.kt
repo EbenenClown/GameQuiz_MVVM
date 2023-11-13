@@ -1,4 +1,4 @@
-package com.tommygr.gamequiz.util.dataGenerators
+package com.tommygr.shared_test.datagenerators
 
 import com.tommygr.gamequiz.domain.domainmodels.QuizElementDomainModel
 import kotlin.random.Random
@@ -13,7 +13,7 @@ fun getQuizDomainModelListWith150Entries(): List<QuizElementDomainModel> {
     return list
 }
 
-fun quizElementDomainModel(id: String, isSolved: Boolean, wasShown: Boolean) = QuizElementDomainModel(
+fun quizElementDomainModel(id: String, isSolved: Boolean = false, wasShown: Boolean = false) = QuizElementDomainModel(
     id = id,
     type = 0,
     question = "Where",

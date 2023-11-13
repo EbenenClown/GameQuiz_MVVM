@@ -35,7 +35,7 @@ class UserDaoTest {
         val user = UserDataModel("1", "iii@mail.com")
         userDao.addUser(user)
 
-        val retrievedUser = userDao.getUser("1")
+        val retrievedUser = userDao.getUser()
         assertThat(retrievedUser).isEqualTo(user)
     }
 
@@ -47,7 +47,7 @@ class UserDaoTest {
         val newUserEmail = UserDataModel("1", "aaa@mail.com")
         userDao.updateUser(newUserEmail)
 
-        val retrievedUser = userDao.getUser("1")
+        val retrievedUser = userDao.getUser()
         assertThat(retrievedUser).isEqualTo(newUserEmail)
     }
 
@@ -58,7 +58,7 @@ class UserDaoTest {
 
         userDao.deleteUser(user)
 
-        val retrievedUser = userDao.getUser("1")
+        val retrievedUser = userDao.getUser()
         assertThat(retrievedUser).isNull()
     }
 
@@ -69,7 +69,7 @@ class UserDaoTest {
 
         userDao.clear()
 
-        val retrievedUser = userDao.getUser("1")
+        val retrievedUser = userDao.getUser()
         assertThat(retrievedUser).isNull()
     }
 

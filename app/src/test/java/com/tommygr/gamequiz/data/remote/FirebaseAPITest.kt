@@ -3,6 +3,7 @@ package com.tommygr.gamequiz.data.remote
 import assertk.assertThat
 import assertk.assertions.isEqualTo
 import com.tommygr.gamequiz.data.source.remote.FirebaseAPI
+import com.tommygr.shared_test.datagenerators.quizElementDataModel
 import io.mockk.MockKAnnotations
 import io.mockk.clearMocks
 import io.mockk.coEvery
@@ -26,7 +27,7 @@ class FirebaseAPITest {
     @Test
     fun testGetAllQuizElements() = runBlocking {
         val mockResponse = hashMapOf (
-            "" to com.tommygr.gamequiz.util.dataGenerators.quizElementDataModel("1")
+            "" to quizElementDataModel("1")
         )
         coEvery { mockFirebaseAPI.getAll() } returns Response.success(mockResponse)
 

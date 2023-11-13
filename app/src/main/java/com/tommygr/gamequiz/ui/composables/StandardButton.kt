@@ -1,4 +1,4 @@
-package com.tommygr.gamequiz.ui.ui.composables
+package com.tommygr.gamequiz.ui.composables
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.PaddingValues

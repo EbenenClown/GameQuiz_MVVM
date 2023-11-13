@@ -77,12 +77,6 @@ android {
     }
 }
 
-allprojects {
-    tasks.withType(JavaCompile) {
-        options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
-    }
-}
-
 dependencies {
     implementation 'androidx.core:core-ktx:1.12.0'
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.6.2'
@@ -94,6 +88,8 @@ dependencies {
     implementation 'androidx.compose.material3:material3'
     testImplementation 'org.junit.jupiter:junit-jupiter:5.8.2'
     testImplementation 'org.junit.jupiter:junit-jupiter:5.8.2'
+    testImplementation 'junit:junit:4.12'
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.8.1'
     androidTestImplementation platform('androidx.compose:compose-bom:2022.10.00')
     androidTestImplementation 'androidx.compose.ui:ui-test-junit4'
     debugImplementation 'androidx.compose.ui:ui-tooling'
@@ -152,6 +148,7 @@ dependencies {
     androidTestImplementation("com.willowtreeapps.assertk:assertk:0.27.0")
 
     //Turbine
+    testImplementation 'app.cash.turbine:turbine:1.0.0'
     androidTestImplementation 'app.cash.turbine:turbine:1.0.0'
 
     //Hamcrest
@@ -165,6 +162,13 @@ dependencies {
 
     //Splashscreen
     implementation("androidx.core:core-splashscreen:1.0.1")
+
+    //Coroutines Test API
+    testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3'
+
+    //Shared Test Module
+    testImplementation(project(":shared-test"))
+    androidTestImplementation(project(":shared-test"))
 
 }
 
