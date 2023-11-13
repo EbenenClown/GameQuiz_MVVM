@@ -5,7 +5,7 @@ import assertk.assertions.isEqualTo
 import assertk.assertions.isInstanceOf
 import com.tommygr.gamequiz.domain.repositories.QuizElementRepository
 import com.tommygr.gamequiz.util.Resource
-import com.tommygr.gamequiz.util.dataGenerators.quizElementDomainModel
+import com.tommygr.shared_test.datagenerators.quizElementDomainModel
 import io.mockk.MockKAnnotations
 import io.mockk.clearMocks
 import io.mockk.coEvery

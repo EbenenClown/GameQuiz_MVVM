@@ -35,7 +35,7 @@ object UseCaseModule {
     @Provides
     fun provideResetQuizElementsUseCase(quizElementRepository: QuizElementRepository) = ResetQuizElementsUseCase(quizElementRepository)
     @Provides
-    fun provideRefreshUserUseCase(userRepository: UserRepository) = RefreshUserUseCase(userRepository)
+    fun provideRefreshUserUseCase(userRepository: UserRepository, dataStoreRepository: DataStoreRepository) = RefreshUserUseCase(userRepository, dataStoreRepository)
 
     @Provides
     fun provideSyncQuizElementsUseCase(quizElementRepository: QuizElementRepository) = SyncQuizElementsUseCase(quizElementRepository)

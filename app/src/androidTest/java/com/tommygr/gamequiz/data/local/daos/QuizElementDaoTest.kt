@@ -9,7 +9,7 @@ import assertk.assertions.isEqualTo
 import assertk.assertions.isNull
 import com.tommygr.gamequiz.data.source.local.GameQuizDb
 import com.tommygr.gamequiz.data.source.local.daos.QuizElementDao
-import com.tommygr.gamequiz.util.dataGenerators.quizElementDataModel
+import com.tommygr.shared_test.datagenerators.quizElementDataModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch

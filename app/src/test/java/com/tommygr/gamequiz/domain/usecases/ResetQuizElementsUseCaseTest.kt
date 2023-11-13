@@ -1,6 +1,7 @@
 package com.tommygr.gamequiz.domain.usecases
 
 import com.tommygr.gamequiz.domain.repositories.QuizElementRepository
+import com.tommygr.shared_test.datagenerators.quizElementDomainModel
 import io.mockk.MockKAnnotations
 import io.mockk.clearMocks
 import io.mockk.coEvery
@@ -27,17 +28,17 @@ class ResetQuizElementsUseCaseTest {
     fun `reset list with random wasShown and isSolved values, expect all wasShown and isSolved are false`() =
         runBlocking {
             val generatedList = listOf(
-                com.tommygr.gamequiz.util.dataGenerators.quizElementDomainModel(
+                quizElementDomainModel(
                     "1",
                     isSolved = true,
                     wasShown = true
                 ),
-                com.tommygr.gamequiz.util.dataGenerators.quizElementDomainModel(
+                quizElementDomainModel(
                     "2",
                     isSolved = true,
                     wasShown = false
                 ),
-                com.tommygr.gamequiz.util.dataGenerators.quizElementDomainModel(
+                quizElementDomainModel(
                     "3",
                     isSolved = false,
                     wasShown = true

@@ -9,11 +9,10 @@ import com.tommygr.gamequiz.data.source.datamodels.mapper.toDomainModel
 import com.tommygr.gamequiz.data.source.local.daos.QuizElementDao
 import com.tommygr.gamequiz.data.source.remote.remotedatasources.RemoteQuizElementDataSource
 import com.tommygr.gamequiz.util.Resource
-import com.tommygr.gamequiz.util.dataGenerators.quizElementDataModel
+import com.tommygr.shared_test.datagenerators.quizElementDataModel
 import io.mockk.MockKAnnotations
 import io.mockk.clearAllMocks
 import io.mockk.coEvery
-import io.mockk.coVerify
 import io.mockk.impl.annotations.RelaxedMockK
 import kotlinx.coroutines.runBlocking
 import okhttp3.ResponseBody
