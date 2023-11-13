@@ -37,9 +37,7 @@ class MainScreenViewModelTest {
 
     @RelaxedMockK
     private lateinit var mockSyncQuizElementsUseCase: SyncQuizElementsUseCase
-
     private lateinit var mainScreenViewModel: MainScreenViewModel
-
 
     @BeforeEach
     fun setUp() {
