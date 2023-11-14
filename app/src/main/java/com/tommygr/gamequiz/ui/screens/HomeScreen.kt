@@ -4,7 +4,6 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.MutableTransitionState
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.slideInHorizontally
-import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -19,10 +18,8 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -34,14 +31,12 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 
 import androidx.compose.ui.text.style.TextDecoration
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.rememberNavController
 import com.tommygr.gamequiz.R
 import com.tommygr.gamequiz.ui.composables.StandardButton
 import com.tommygr.gamequiz.ui.viewmodels.MainScreenUiState
@@ -49,9 +44,11 @@ import com.tommygr.gamequiz.ui.viewmodels.MainScreenViewModel
 
 
 @Composable
-fun MainScreen(
-    navController: NavController,
-    mainScreenViewModel: MainScreenViewModel = viewModel()
+fun HomeScreen(
+    onStartGameClick: () -> Unit,
+    onStatisticClick: () -> Unit,
+    onSettingsClick: () -> Unit,
+    mainScreenViewModel: MainScreenViewModel = hiltViewModel()
 ) {
     val visibleState = remember {
         MutableTransitionState(false).apply {
@@ -125,15 +122,15 @@ fun MainScreen(
                 modifier = Modifier.height((screenHeight * (1f / 3f)).dp)
             ) {
                 StandardButton("Start Game") {
-                    navController.navigate("startGame")
+                    onStartGameClick()
                 }
 
                 StandardButton(
                     "Statistics", modifier = Modifier
                         .height(50.dp)
-                        .padding(PaddingValues(end = 40.dp))
-                ) {
 
+                ) {
+                    onStatisticClick()
                 }
 
                 StandardButton(
@@ -141,7 +138,7 @@ fun MainScreen(
                         .height(50.dp)
                         .padding(PaddingValues(end = 40.dp))
                 ) {
-
+                    onSettingsClick()
                 }
 
                 Text(

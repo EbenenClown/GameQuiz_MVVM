@@ -32,7 +32,12 @@ class MainScreenViewModel @Inject constructor(
     private val _uiState = MutableStateFlow<MainScreenUiState>(MainScreenUiState.IsLoading)
     val uiState = _uiState.asStateFlow()
 
-    fun getUserNameAndCheckForLoggedInStatus() {
+    init {
+        getUserNameAndCheckForLoggedInStatus()
+        syncQuizElements()
+    }
+
+    private fun getUserNameAndCheckForLoggedInStatus() {
         viewModelScope.launch(Dispatchers.IO) {
             val userResource = getUserUseCase()
             //When Resource is success there is data, it's checked in the repository -> !! is safe
@@ -51,7 +56,7 @@ class MainScreenViewModel @Inject constructor(
         }
     }
 
-    fun syncQuizElements() {
+    private fun syncQuizElements() {
         viewModelScope.launch(Dispatchers.IO) {
             syncQuizElementsUseCase()
         }

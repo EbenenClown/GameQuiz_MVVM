@@ -37,7 +37,9 @@ import com.tommygr.gamequiz.R
 import com.tommygr.gamequiz.ui.composables.StandardButton
 
 @Composable
-fun GameOptionsScreen(navController: NavController) {
+fun GameOptionsScreen(
+    onGameModeClicked: (Int) -> Unit
+) {
 
     val configuration = LocalConfiguration.current
     val screenHeight = configuration.screenHeightDp
@@ -96,24 +98,17 @@ fun GameOptionsScreen(navController: NavController) {
                 modifier = Modifier.height((screenHeight * (1f / 3f)).dp)
             ) {
                 StandardButton("10 Questions") {
-
+                    onGameModeClicked(10)
                 }
 
                 StandardButton("20 Questions") {
-
+                    onGameModeClicked(20)
                 }
 
                 StandardButton("Endless Mode") {
-
+                    onGameModeClicked(-1)
                 }
             }
-
         }
     }
-}
-
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-fun GameOptionsPreview() {
-    GameOptionsScreen(rememberNavController())
 }
