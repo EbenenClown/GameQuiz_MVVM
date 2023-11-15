@@ -14,14 +14,6 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-sealed class MainScreenUiState {
-    data object IsLoading : MainScreenUiState()
-    data class Success(val userName: String, val isLoggedIn: Boolean, val errorMessage: String?) :
-        MainScreenUiState()
-
-    data class Failure(val errorMessage: String?) : MainScreenUiState()
-}
-
 @HiltViewModel
 class MainScreenViewModel @Inject constructor(
     private val getUserUseCase: GetUserUseCase,
@@ -80,4 +72,12 @@ class MainScreenViewModel @Inject constructor(
             }
         }
     }
+}
+
+sealed class MainScreenUiState {
+    data object IsLoading : MainScreenUiState()
+    data class Success(val userName: String, val isLoggedIn: Boolean, val errorMessage: String?) :
+        MainScreenUiState()
+
+    data class Failure(val errorMessage: String?) : MainScreenUiState()
 }

@@ -35,6 +35,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.tommygr.gamequiz.R
 import com.tommygr.gamequiz.ui.composables.StandardButton
+import com.tommygr.gamequiz.util.GameSize
 
 @Composable
 fun GameOptionsScreen(
@@ -98,15 +99,15 @@ fun GameOptionsScreen(
                 modifier = Modifier.height((screenHeight * (1f / 3f)).dp)
             ) {
                 StandardButton("10 Questions") {
-                    onGameModeClicked(10)
+                    onGameModeClicked(GameSize.FIFTEEN.value)
                 }
 
                 StandardButton("20 Questions") {
-                    onGameModeClicked(20)
+                    onGameModeClicked(GameSize.FIFTY.value)
                 }
 
                 StandardButton("Endless Mode") {
-                    onGameModeClicked(-1)
+                    onGameModeClicked(GameSize.MAX.value)
                 }
             }
         }
