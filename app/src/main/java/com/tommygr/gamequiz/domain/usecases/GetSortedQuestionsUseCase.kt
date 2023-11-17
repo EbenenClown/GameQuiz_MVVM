@@ -11,7 +11,7 @@ class GetSortedQuestionsUseCase @Inject constructor(private val quizElementRepos
         val filteredList = mutableListOf<QuizElementDomainModel>()
 
         return if(allElementsResource is Resource.Success) {
-            //room list can't be null or empty, cause it's checked in repository and results in Resource.Error -> data!! is safe
+            //room list can't be null or empty  it's checked in repository and results in Resource.Error -> data!! is safe
             val allElements = allElementsResource.data!!
             allElements.sortedWith(compareBy<QuizElementDomainModel>{it.wasShown}.thenBy {it.isSolved})
             filteredList += if(gameSize > 0) allElements.take(gameSize) else allElements
