@@ -1,13 +1,20 @@
 package com.tommygr.gamequiz.ui.composables
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -23,6 +30,7 @@ fun StandardButton(
     text: String,
     modifier: Modifier = Modifier,
     backgroundColor: Color = Color.Black,
+    textAlign: TextAlign = TextAlign.End,
     onClicked: () -> Unit = {}
 ) {
     OutlinedButton(
@@ -39,9 +47,27 @@ fun StandardButton(
         Text(
             text = text,
             modifier = Modifier.fillMaxWidth(),
-            textAlign = TextAlign.End,
+            textAlign = textAlign,
             fontSize = 20.sp,
             fontWeight = FontWeight.Bold
         )
+    }
+}
+
+@Composable
+fun AttemptCheckBox(
+    checked: Boolean,
+    modifier: Modifier = Modifier
+) {
+    IconButton(modifier = modifier.border(border = BorderStroke(2.dp, Color.White)).size(16.dp), onClick = {}) {
+        if (checked) {
+            Icon(
+                Icons.Filled.Clear,
+                tint = Color.White,
+                contentDescription = "checked",
+                modifier = Modifier
+                    .fillMaxSize()
+            )
+        }
     }
 }

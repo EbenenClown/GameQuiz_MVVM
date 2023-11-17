@@ -14,14 +14,6 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-sealed class MainScreenUiState {
-    data object IsLoading : MainScreenUiState()
-    data class Success(val userName: String, val isLoggedIn: Boolean, val errorMessage: String?) :
-        MainScreenUiState()
-
-    data class Failure(val errorMessage: String?) : MainScreenUiState()
-}
-
 @HiltViewModel
 class MainScreenViewModel @Inject constructor(
     private val getUserUseCase: GetUserUseCase,
@@ -32,7 +24,12 @@ class MainScreenViewModel @Inject constructor(
     private val _uiState = MutableStateFlow<MainScreenUiState>(MainScreenUiState.IsLoading)
     val uiState = _uiState.asStateFlow()
 
-    fun getUserNameAndCheckForLoggedInStatus() {
+    init {
+        getUserNameAndCheckForLoggedInStatus()
+        syncQuizElements()
+    }
+
+    private fun getUserNameAndCheckForLoggedInStatus() {
         viewModelScope.launch(Dispatchers.IO) {
             val userResource = getUserUseCase()
             //When Resource is success there is data, it's checked in the repository -> !! is safe
@@ -51,7 +48,7 @@ class MainScreenViewModel @Inject constructor(
         }
     }
 
-    fun syncQuizElements() {
+    private fun syncQuizElements() {
         viewModelScope.launch(Dispatchers.IO) {
             syncQuizElementsUseCase()
         }
@@ -75,4 +72,12 @@ class MainScreenViewModel @Inject constructor(
             }
         }
     }
+}
+
+sealed class MainScreenUiState {
+    data object IsLoading : MainScreenUiState()
+    data class Success(val userName: String, val isLoggedIn: Boolean, val errorMessage: String?) :
+        MainScreenUiState()
+
+    data class Failure(val errorMessage: String?) : MainScreenUiState()
 }

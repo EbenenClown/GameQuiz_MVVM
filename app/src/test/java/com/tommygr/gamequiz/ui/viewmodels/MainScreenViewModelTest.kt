@@ -52,11 +52,15 @@ class MainScreenViewModelTest {
     }
 
     @Test
+    fun `init ui state is loading`() {
+        assertThat(mainScreenViewModel.uiState.value).isEqualTo(MainScreenUiState.IsLoading)
+    }
+
+    @Test
     fun `get not registered user and check for name and logged in status, loading toggles and local user is loaded`() = runTest{
         val mockUser = UserDomainModel("1", "", "", false)
         coEvery { mockGetUserUseCase() } returns Resource.Success(mockUser)
 
-        assertThat(mainScreenViewModel.uiState.value).isEqualTo(MainScreenUiState.IsLoading)
         mainScreenViewModel.getUserNameAndCheckForLoggedInStatus()
 
         mainScreenViewModel.uiState.test {
@@ -70,7 +74,6 @@ class MainScreenViewModelTest {
         coEvery { mockGetUserUseCase() } returns Resource.Success(mockUser)
         coEvery { mockRefreshUserUseCase() } returns Resource.Success(mockUser)
 
-        assertThat(mainScreenViewModel.uiState.value).isEqualTo(MainScreenUiState.IsLoading)
         mainScreenViewModel.getUserNameAndCheckForLoggedInStatus()
 
         mainScreenViewModel.uiState.test {
@@ -84,7 +87,6 @@ class MainScreenViewModelTest {
         coEvery { mockGetUserUseCase() } returns Resource.Success(mockUser)
         coEvery { mockRefreshUserUseCase() } returns Resource.Error("user login failed")
 
-        assertThat(mainScreenViewModel.uiState.value).isEqualTo(MainScreenUiState.IsLoading)
         mainScreenViewModel.getUserNameAndCheckForLoggedInStatus()
 
         mainScreenViewModel.uiState.test {
@@ -97,7 +99,6 @@ class MainScreenViewModelTest {
         val mockUser = UserDomainModel("", "", "", false)
         coEvery { mockGetUserUseCase() } returns Resource.Success(mockUser)
 
-        assertThat(mainScreenViewModel.uiState.value).isEqualTo(MainScreenUiState.IsLoading)
         mainScreenViewModel.getUserNameAndCheckForLoggedInStatus()
 
         coVerify { mockCreateLocalUserUseCase(any()) }

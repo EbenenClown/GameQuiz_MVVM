@@ -35,9 +35,12 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.tommygr.gamequiz.R
 import com.tommygr.gamequiz.ui.composables.StandardButton
+import com.tommygr.gamequiz.util.GameSize
 
 @Composable
-fun GameOptionsScreen(navController: NavController) {
+fun GameOptionsScreen(
+    onGameModeClicked: (Int) -> Unit
+) {
 
     val configuration = LocalConfiguration.current
     val screenHeight = configuration.screenHeightDp
@@ -96,24 +99,17 @@ fun GameOptionsScreen(navController: NavController) {
                 modifier = Modifier.height((screenHeight * (1f / 3f)).dp)
             ) {
                 StandardButton("10 Questions") {
-
+                    onGameModeClicked(GameSize.FIFTEEN.value)
                 }
 
                 StandardButton("20 Questions") {
-
+                    onGameModeClicked(GameSize.FIFTY.value)
                 }
 
                 StandardButton("Endless Mode") {
-
+                    onGameModeClicked(GameSize.MAX.value)
                 }
             }
-
         }
     }
-}
-
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-fun GameOptionsPreview() {
-    GameOptionsScreen(rememberNavController())
 }
