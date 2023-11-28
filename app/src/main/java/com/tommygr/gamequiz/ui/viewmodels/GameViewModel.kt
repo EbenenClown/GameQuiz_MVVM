@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.tommygr.gamequiz.GameQuizDestinationsArgs
 import com.tommygr.gamequiz.domain.usecases.GetSortedQuestionsUseCase
+import com.tommygr.gamequiz.util.Constants
 import com.tommygr.gamequiz.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -12,7 +13,6 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -33,6 +33,7 @@ class GameViewModel @Inject constructor(
     private var timerJob: Job? = null
     private var activeQuestionIndex = 0
     private var score = 0
+    private var numberOfFailedQuestions = 0
 
     init {
         loadQuizElements()
@@ -48,7 +49,7 @@ class GameViewModel @Inject constructor(
         }
     }
 
-    fun pauseTimer() {
+    private fun pauseTimer() {
         timerJob?.cancel()
     }
 
@@ -65,7 +66,7 @@ class GameViewModel @Inject constructor(
                     //TODO: make backend give a list of options
                     Question(it.question, listOf(it.options), it.hint)
                 })
-                startGame(questions)
+                nextQuestion(questions)
 
             } else {
                 _uiState.value = GameUiState.Failure(
@@ -75,7 +76,15 @@ class GameViewModel @Inject constructor(
         }
     }
 
-    private fun startGame(questions: List<Question>) {
+    fun nextQuestion(questions: List<Question>) {
+        if(activeQuestionIndex >= gameSize) {
+            _uiState.value = GameUiState.QuizFinished(
+                finalScore = score,
+                shownQuestions = gameSize
+            )
+            return
+        }
+
         startTimer()
 
         val activeQuestion = questions[activeQuestionIndex]
@@ -84,7 +93,8 @@ class GameViewModel @Inject constructor(
             question = activeQuestion
         )
 
-        if (timer.value >= 15000) {
+        if (timer.value >= Constants.QUIZ_QUESTION_TIME_IN_MILLISECONDS) {
+            stopTimer()
             _uiState.value = GameUiState.TimeUp(
                 correctAnswer = activeQuestion.correctAnswer,
                 score = score
@@ -103,19 +113,43 @@ class GameViewModel @Inject constructor(
                 score = score
             )
         } else {
+            numberOfFailedQuestions++
+            if(numberOfFailedQuestions == Constants.QUIZ_NUMBER_OF_TRIES) {
+                _uiState.value = GameUiState.QuizFinished(
+                    finalScore = score,
+                    shownQuestions = activeQuestionIndex + 1
+                )
+                return
+            }
             _uiState.value = GameUiState.IncorrectAnswer(
                 correctAnswer = correctAnswer,
                 score = score
             )
         }
+        activeQuestionIndex++
     }
 
-    fun nextQuestion() {
-        activeQuestionIndex++
+    fun stopQuestion() {
+        pauseTimer()
+        _uiState.value = GameUiState.StoppedQuestion(
+            question = questions[activeQuestionIndex],
+            timerMilliSeconds = timer.value
+        )
+    }
 
-        if (activeQuestionIndex > questions.size - 1) {
+    fun resumeQuestion() {
+        startTimer()
+        _uiState.value = GameUiState.ActiveQuestion(
+            question = questions[activeQuestionIndex]
+        )
+    }
 
-        }
+    fun quit() {
+        stopTimer()
+        _uiState.value = GameUiState.QuizFinished(
+            finalScore = score,
+            shownQuestions = activeQuestionIndex + 1
+        )
     }
 
     override fun onCleared() {
@@ -127,12 +161,11 @@ class GameViewModel @Inject constructor(
 sealed class GameUiState {
     data object Initialization : GameUiState()
     data class ActiveQuestion(val question: Question) : GameUiState()
-    data class StoppedQuestion(val question: Question, val timerSeconds: Int) : GameUiState()
+    data class StoppedQuestion(val question: Question, val timerMilliSeconds: Long) : GameUiState()
     data class CorrectAnswer(val correctAnswer: String, val score: Int) : GameUiState()
     data class IncorrectAnswer(val correctAnswer: String, val score: Int) : GameUiState()
     data class TimeUp(val correctAnswer: String, val score: Int) : GameUiState()
-    data class QuizFinished(val finalScore: Int) : GameUiState()
-    data class Quit(val score: Int) : GameUiState()
+    data class QuizFinished(val finalScore: Int, val shownQuestions: Int) : GameUiState()
     data class Failure(val errorMessage: String?) : GameUiState()
 }
 
