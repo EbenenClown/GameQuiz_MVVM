@@ -43,16 +43,16 @@ class MainScreenViewModelTest {
     fun setUp() {
         MockKAnnotations.init(this)
         Dispatchers.setMain(UnconfinedTestDispatcher())
+    }
+
+    @Test
+    fun `init ui state is loading`() {
         mainScreenViewModel = MainScreenViewModel(
             mockGetUserUseCase,
             mockRefreshUserUseCase,
             mockCreateLocalUserUseCase,
             mockSyncQuizElementsUseCase,
         )
-    }
-
-    @Test
-    fun `init ui state is loading`() {
         assertThat(mainScreenViewModel.uiState.value).isEqualTo(MainScreenUiState.IsLoading)
     }
 
@@ -61,7 +61,12 @@ class MainScreenViewModelTest {
         val mockUser = UserDomainModel("1", "", "", false)
         coEvery { mockGetUserUseCase() } returns Resource.Success(mockUser)
 
-        mainScreenViewModel.getUserNameAndCheckForLoggedInStatus()
+        mainScreenViewModel = MainScreenViewModel(
+            mockGetUserUseCase,
+            mockRefreshUserUseCase,
+            mockCreateLocalUserUseCase,
+            mockSyncQuizElementsUseCase,
+        )
 
         mainScreenViewModel.uiState.test {
             assertThat(awaitItem()).isEqualTo(MainScreenUiState.Success("", false, null))
@@ -74,7 +79,12 @@ class MainScreenViewModelTest {
         coEvery { mockGetUserUseCase() } returns Resource.Success(mockUser)
         coEvery { mockRefreshUserUseCase() } returns Resource.Success(mockUser)
 
-        mainScreenViewModel.getUserNameAndCheckForLoggedInStatus()
+        mainScreenViewModel = MainScreenViewModel(
+            mockGetUserUseCase,
+            mockRefreshUserUseCase,
+            mockCreateLocalUserUseCase,
+            mockSyncQuizElementsUseCase,
+        )
 
         mainScreenViewModel.uiState.test {
             assertThat(awaitItem()).isEqualTo(MainScreenUiState.Success("Test", true, null))
@@ -87,7 +97,12 @@ class MainScreenViewModelTest {
         coEvery { mockGetUserUseCase() } returns Resource.Success(mockUser)
         coEvery { mockRefreshUserUseCase() } returns Resource.Error("user login failed")
 
-        mainScreenViewModel.getUserNameAndCheckForLoggedInStatus()
+        mainScreenViewModel = MainScreenViewModel(
+            mockGetUserUseCase,
+            mockRefreshUserUseCase,
+            mockCreateLocalUserUseCase,
+            mockSyncQuizElementsUseCase,
+        )
 
         mainScreenViewModel.uiState.test {
             assertThat(awaitItem()).isEqualTo(MainScreenUiState.Failure("user login failed"))
@@ -99,14 +114,25 @@ class MainScreenViewModelTest {
         val mockUser = UserDomainModel("", "", "", false)
         coEvery { mockGetUserUseCase() } returns Resource.Success(mockUser)
 
-        mainScreenViewModel.getUserNameAndCheckForLoggedInStatus()
+        mainScreenViewModel = MainScreenViewModel(
+            mockGetUserUseCase,
+            mockRefreshUserUseCase,
+            mockCreateLocalUserUseCase,
+            mockSyncQuizElementsUseCase,
+        )
+
 
         coVerify { mockCreateLocalUserUseCase(any()) }
     }
 
     @Test
     fun `sync quiz elements, use case is called`() = runTest {
-        mainScreenViewModel.syncQuizElements()
+        mainScreenViewModel = MainScreenViewModel(
+            mockGetUserUseCase,
+            mockRefreshUserUseCase,
+            mockCreateLocalUserUseCase,
+            mockSyncQuizElementsUseCase,
+        )
 
         coVerify { mockSyncQuizElementsUseCase() }
     }
