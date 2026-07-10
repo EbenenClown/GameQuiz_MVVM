@@ -45,20 +45,3 @@ The project follows a feature-by-feature or layer-based clean architecture appro
 *   `di/`: Dagger/Hilt modules providing singletons and repository instances.
 *   `ui/`: Jetpack Compose screens, components, themes, and corresponding ViewModels.
 *   `model/`: Pure domain/business logic models.
-
----
-
-## 🛠️ Setup & Installation
-
-1.  **Clone the repository:**
-    ```bash
-    git clone [https://github.com/EbenenClown/GameQuiz_MVVM.git](https://github.com/EbenenClown/GameQuiz_MVVM.git)
-    ```
-2.  **Firebase Configuration:**
-    *   Create a project in the [Firebase Console](https://console.firebase.google.com/).
-    *   Add an Android App to the Firebase project (using your package name).
-    *   Download the `google-services.json` file and place it into the `app/` directory of this project.
-    *   Enable *Authentication* and *Firestore/Realtime Database* in your console.
-3.  **Build and Run:**
-    *   Open the project in **Android Studio**.
-    *   Sync Gradle and deploy the application to an emulator or physical device.
