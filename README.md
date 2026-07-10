@@ -9,7 +9,7 @@ A native Android Quiz Application centered around video games, built to explore,
 ---
 
 ## 🚀 Purpose & Motivation
-This project was initiated as a comprehensive playground to master the **MVVM (Model-View-ViewModel)** architecture pattern and integrate industry-standard Android libraries. The core focus was to achieve a clean separation of concerns, testability, and a highly scalable codebase while utilizing cloud-backed services.
+This project was initiated as a comprehensive playground to master the **MVVM (Model-View-ViewModel)** architecture pattern and integrate industry-standard Android libraries. The core focus was to achieve a clean separation of concerns, testability, and a highly scalable codebase while utilizing cloud-backed services. The Project was build 4 years ago, so there was no involvement of AI.
 
 ---
 
