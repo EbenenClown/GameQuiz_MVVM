@@ -1,4 +1,3 @@
-# GameQuiz_MVVM
 # GameQuiz (MVVM Showcase)
 
 A native Android Quiz Application centered around video games, built to explore, implement, and benchmark modern Android development best practices and architecture patterns.
