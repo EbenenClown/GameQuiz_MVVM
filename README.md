@@ -1,6 +1,6 @@
 # GameQuiz (MVVM Showcase)
 
-A native Android Quiz Application centered around video games, built to explore, implement, and benchmark modern Android development best practices and architecture patterns.
+A native Android Quiz Application centered around video games, built to explore, implement, and benchmark modern Android development best practices and architecture patterns. The project was build 4 years ago, so there was no AI involvement.
 
 [![Platform](https://img.shields.io/badge/platform-Android-green.svg)](https://developer.android.com)
 [![Architecture](https://img.shields.io/badge/Architecture-MVVM-blue.svg)](https://developer.android.com/topic/libraries/architecture)
