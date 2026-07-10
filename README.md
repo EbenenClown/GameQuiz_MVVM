@@ -31,14 +31,6 @@ This project was initiated as a comprehensive playground to master the **MVVM (M
 
 ---
 
-## 🔑 Security & Engineering Takeaways
-As an aspiring **IT Security Specialist**, building this project provided deep practical insights into several security-relevant software engineering concepts:
-1.  **Secure Authentication Workflows:** Implementing Firebase Auth highlighted the importance of secure token handling and session management on client devices.
-2.  **Database Rules & Access Control:** Managing user scores and question pools emphasized the critical need for strict backend-side validation and security rules (least privilege principle for database access).
-3.  **Input Sanitization & State Integrity:** Ensuring that user inputs (e.g., nicknames, score submissions) are processed securely without exposing vulnerabilities or allowing state manipulation.
-
----
-
 ## 📦 Project Structure (High-Level)
 The project follows a feature-by-feature or layer-based clean architecture approach:
 *   `data/`: Data sources, Firebase repositories, and data models.
