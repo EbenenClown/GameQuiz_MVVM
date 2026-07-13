@@ -13,13 +13,6 @@ This project was initiated as a comprehensive playground to master the **MVVM (M
 
 ---
 
-## 📋 Project Status: Core Ready, UI Work in Progress
-Note: The core engine, business logic, and backend integration are fully completed and functional. The User Interface (UI) is currently under active development.
-*   **Backend & Logic (100%):** Firebase integration, Authentication, Data Repositories, Dependency Injection (Hilt), and ViewModels are fully implemented and tested.
-*   **UI & Presentation (~60%):** The architectural foundation for Jetpack Compose is set, but some screens and visual components are still being built or refined.
-
----
-
 ## 🛠️ Tech Stack & Architecture
 
 ### Architecture & UI
@@ -44,3 +37,12 @@ The project follows a feature-by-feature or layer-based clean architecture appro
 *   `di/`: Dagger/Hilt modules providing singletons and repository instances.
 *   `ui/`: Jetpack Compose screens, components, themes, and corresponding ViewModels.
 *   `model/`: Pure domain/business logic models.
+
+---
+
+## 📋 Project Status: Core Ready, UI Work in Progress
+Note: The core engine, business logic, and backend integration are fully completed and functional. The User Interface (UI) is currently under active development.
+*   **Backend & Logic (100%):** Firebase integration, Authentication, Data Repositories, Dependency Injection (Hilt), and ViewModels are fully implemented and tested.
+*   **UI & Presentation (~40%):** The architectural foundation for Jetpack Compose is set, but some screens and visual components are still being built or refined.
+
+
